@@ -21,7 +21,7 @@ export function createImportAliasConfig(options: { rootDir?: string; tsconfig?: 
   try {
     const tsconfigContent = parseTsconfig(tsconfigPath);
     // `baseUrl` is deprecated in TS 6 but still read here for legacy path-alias resolution.
-    // eslint-disable-next-line @typescript-eslint/no-deprecated, sonarjs/deprecation
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     const baseUrl = tsconfigContent?.compilerOptions?.baseUrl ?? '';
     const paths = resolveTsconfigPaths(tsconfigPath);
 

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention, unicorn/prevent-abbreviations -- this logger intentionally mirrors the `console` API (log/info/warn/error/dir/table) and uses reserved-word-avoiding identifiers (`arguments_`, `VERBOSE`). */
+/* eslint-disable @typescript-eslint/naming-convention -- this logger intentionally mirrors the `console` API (log/info/warn/error/dir/table), some of which (`dir`) are denylisted abbreviations. */
 const VERBOSE = process.env.ESLINT_DEBUG === 'true';
 
 /** A context-prefixed console wrapper; each method mirrors `console`. */
@@ -27,7 +27,6 @@ function colorContext(context: string, method: string): string {
     table: '\u001B[32m',
   };
 
-  // eslint-disable-next-line security/detect-object-injection
   const methodColor = METHOD_COLORS[method] ?? '';
 
   if (methodColor) {
@@ -55,7 +54,6 @@ export function eslintLogger(context: string): EslintLogger {
   const sink = console as unknown as Record<keyof EslintLogger, (...arguments_: unknown[]) => void>;
 
   return {
-    /* eslint-disable no-console, lintlord/prefer-logger */
     log: (...arguments_) => {
       sink.log(colorContext(context, 'log'), ...arguments_);
     },
@@ -74,6 +72,5 @@ export function eslintLogger(context: string): EslintLogger {
     table: (...arguments_) => {
       sink.table(colorContext(context, 'table'), ...arguments_);
     },
-    /* eslint-enable no-console, lintlord/prefer-logger */
   };
 }

@@ -43,7 +43,10 @@ export default defineConfig([
       'default-case-last': 'error',
       'default-param-last': 'error',
       'grouped-accessor-pairs': ['error', 'anyOrder', { enforceForTSTypes: false }],
-      'max-classes-per-file': ['error', 1],
+      // A small, co-located group of related classes (e.g. a base error plus
+      // its subclasses) is idiomatic; forcing one class per file hurts more
+      // than it helps. See fix-consumer-stack-defects (rule-policy-coherence).
+      'max-classes-per-file': 'off',
       'no-alert': 'warn',
       'no-constructor-return': 'error',
       'no-else-return': ['error', { allowElseIf: false }],
@@ -97,7 +100,11 @@ export default defineConfig([
       'no-sequences': ['error', { allowInParentheses: true }],
       'no-useless-concat': 'error',
       'no-useless-return': 'error',
-      'no-void': ['error', { allowAsStatement: false }],
+      // Allow `void promise;` as a statement: it is the canonical way to mark a
+      // deliberately-unawaited promise as handled for
+      // `@typescript-eslint/no-floating-promises`. Banning it outright put the
+      // two rules in conflict. See fix-consumer-stack-defects.
+      'no-void': ['error', { allowAsStatement: true }],
       'vars-on-top': 'error',
       yoda: ['error', 'never', { exceptRange: false, onlyEquality: false }],
 

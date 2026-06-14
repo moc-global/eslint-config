@@ -27,6 +27,11 @@ export default defineConfig([
             Param: true,
             rootDir: true,
             RootDir: true,
+            // `Props`/`props` is the universal React convention for a
+            // component's props type (`ButtonProps`); do not expand it to
+            // `Properties`. See fix-consumer-stack-defects (rule-policy-coherence).
+            props: true,
+            Props: true,
           },
         },
       ],

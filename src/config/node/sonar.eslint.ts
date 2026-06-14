@@ -14,6 +14,12 @@ export default defineConfig([
   {
     name: 'sonar-custom',
     rules: {
+      // Single owner per concern (see fix-consumer-stack-defects):
+      //  - super-linear regexes are owned by `regexp/no-super-linear-backtracking`
+      //  - deprecated-symbol usage is owned by `@typescript-eslint/no-deprecated`
+      // Disable the SonarJS duplicates so one issue isn't reported twice.
+      'sonarjs/deprecation': 'off',
+      'sonarjs/slow-regex': 'off',
       'sonarjs/function-return-type': 'warn',
       'sonarjs/no-commented-code': 'off',
       'sonarjs/no-selector-parameter': 'off',
