@@ -1,6 +1,6 @@
 {
   "name": "@moc-global/eslint-config",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Shared, company-wide ESLint flat config for Node.js, NestJS, React, and Vue projects — with an interactive installer.",
   "keywords": [
     "eslint",
@@ -21,27 +21,68 @@
     "node": "^22.21.0 || >=24.10.0"
   },
   "bin": {
-    "moc-eslint": "./src/cli/index.mjs"
+    "moc-eslint": "./dist/cli/index.js"
   },
-  "main": "./src/index.mjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.mjs",
-    "./node": "./src/node.eslint.mjs",
-    "./react": "./src/react.eslint.mjs",
-    "./vue": "./src/vue.eslint.mjs",
-    "./nest": "./src/nest.eslint.mjs",
-    "./vitest": "./src/vitest.eslint.mjs",
-    "./jest": "./src/jest.eslint.mjs",
-    "./zod": "./src/zod.eslint.mjs",
-    "./i18n": "./src/i18n.eslint.mjs",
-    "./tailwind": "./src/tailwind.eslint.mjs",
-    "./stacks": "./src/cli/stacks.mjs",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./node": {
+      "types": "./dist/config/node.eslint.d.ts",
+      "import": "./dist/config/node.eslint.js"
+    },
+    "./react": {
+      "types": "./dist/config/react.eslint.d.ts",
+      "import": "./dist/config/react.eslint.js"
+    },
+    "./vue": {
+      "types": "./dist/config/vue.eslint.d.ts",
+      "import": "./dist/config/vue.eslint.js"
+    },
+    "./nest": {
+      "types": "./dist/config/nest.eslint.d.ts",
+      "import": "./dist/config/nest.eslint.js"
+    },
+    "./vitest": {
+      "types": "./dist/config/vitest.eslint.d.ts",
+      "import": "./dist/config/vitest.eslint.js"
+    },
+    "./jest": {
+      "types": "./dist/config/jest.eslint.d.ts",
+      "import": "./dist/config/jest.eslint.js"
+    },
+    "./zod": {
+      "types": "./dist/config/zod.eslint.d.ts",
+      "import": "./dist/config/zod.eslint.js"
+    },
+    "./i18n": {
+      "types": "./dist/config/i18n.eslint.d.ts",
+      "import": "./dist/config/i18n.eslint.js"
+    },
+    "./tailwind": {
+      "types": "./dist/config/tailwind.eslint.d.ts",
+      "import": "./dist/config/tailwind.eslint.js"
+    },
+    "./stacks": {
+      "types": "./dist/core/manifest.d.ts",
+      "import": "./dist/core/manifest.js"
+    },
     "./package.json": "./package.json"
   },
   "files": [
-    "src"
+    "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run clean && npm run build",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "typecheck": "tsc --noEmit",
@@ -101,23 +142,46 @@
     "vue-eslint-parser": "^10.4.1"
   },
   "peerDependenciesMeta": {
-    "@darraghor/eslint-plugin-nestjs-typed": { "optional": true },
-    "eslint-plugin-better-tailwindcss": { "optional": true },
-    "eslint-plugin-i18next": { "optional": true },
-    "eslint-plugin-jest": { "optional": true },
-    "eslint-plugin-react": { "optional": true },
-    "eslint-plugin-react-compiler": { "optional": true },
-    "eslint-plugin-react-hooks": { "optional": true },
-    "eslint-plugin-react-refresh": { "optional": true },
-    "eslint-plugin-vue": { "optional": true },
-    "typescript": { "optional": true },
-    "vue-eslint-parser": { "optional": true }
+    "@darraghor/eslint-plugin-nestjs-typed": {
+      "optional": true
+    },
+    "eslint-plugin-better-tailwindcss": {
+      "optional": true
+    },
+    "eslint-plugin-i18next": {
+      "optional": true
+    },
+    "eslint-plugin-jest": {
+      "optional": true
+    },
+    "eslint-plugin-react": {
+      "optional": true
+    },
+    "eslint-plugin-react-compiler": {
+      "optional": true
+    },
+    "eslint-plugin-react-hooks": {
+      "optional": true
+    },
+    "eslint-plugin-react-refresh": {
+      "optional": true
+    },
+    "eslint-plugin-vue": {
+      "optional": true
+    },
+    "typescript": {
+      "optional": true
+    },
+    "vue-eslint-parser": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@darraghor/eslint-plugin-nestjs-typed": "^7.1.31",
     "@types/node": "^25.6.0",
     "@vitest/coverage-v8": "^4.1.5",
     "eslint": "^10.2.1",
+    "eslint-import-resolver-typescript": "^4.4.5",
     "eslint-plugin-better-tailwindcss": "^4.6.0",
     "eslint-plugin-i18next": "^6.1.4",
     "eslint-plugin-jest": "^29.15.2",
@@ -126,6 +190,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "eslint-plugin-vue": "^10.9.2",
+    "jiti": "^2.7.0",
     "type-fest": "^5.6.0",
     "typescript": "^6.0.3",
     "vitepress": "^1.6.3",

@@ -10,3 +10,6 @@ local/
 # VitePress build output
 docs/.vitepress/dist/
 docs/.vitepress/cache/
+
+# TypeScript build output
+dist/
