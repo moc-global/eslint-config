@@ -160,7 +160,11 @@ export async function moc(options: MocOptions = {}): Promise<Linter.Config[]> {
     configs.push(...entryModule.createReactConfig(options));
   }
 
-  if (enabled('vue', detected.stacks)) {
+  // `vueTs: true` implies the Vue stack: a consumer asking for type-aware SFC
+  // linting clearly wants Vue, so enable it even if `vue` was not detected — but
+  // never override an explicit `vue: false`. Without this, `moc({ vueTs: true })`
+  // on a project where `vue` isn't detected silently produced no Vue config.
+  if (enabled('vue', detected.stacks) || (options.vueTs === true && options.vue !== false)) {
     const entryModule = (await importEntry(STACKS.vue)) as unknown as {
       createVueConfig: () => Linter.Config[];
       createVueTsConfig: () => Linter.Config[];
