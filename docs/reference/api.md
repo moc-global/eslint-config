@@ -18,7 +18,7 @@ All options are optional. Stack/add-on flags are `boolean | undefined` — `true
 |---|---|---|---|
 | `node` | `boolean` | always on | The Node/TypeScript base. Always included. |
 | `nest` | `boolean` | auto | NestJS rules (replaces the base with Node + Nest). |
-| `react` | `boolean` | auto | React, hooks, refresh, and compiler rules. |
+| `react` | `boolean` | auto | React, hooks, and refresh rules. (React Compiler is opt-in — see `/react-compiler`.) |
 | `vue` | `boolean` | auto | Vue SFC rules. |
 | `vueTs` | `boolean` | `false` | Use the TypeScript parser chain for `.vue` files. |
 | `vitest` | `boolean` | auto | Vitest test-file rules (plugin bundled). |
@@ -49,6 +49,7 @@ Each stack is also exported on its own subpath, importing its optional peers dir
 | `@moc-global/eslint-config` | `moc` (default & named), `createNodeConfig`, `detectStacks`, `STACKS`, `EXTRAS` |
 | `@moc-global/eslint-config/node` | `createNodeConfig`, default |
 | `@moc-global/eslint-config/react` | `createReactConfig`, default |
+| `@moc-global/eslint-config/react-compiler` | default (opt-in; requires `eslint-plugin-react-compiler`) |
 | `@moc-global/eslint-config/vue` | `createVueConfig`, `createVueTsConfig`, default |
 | `@moc-global/eslint-config/nest` | `createNestConfig`, default |
 | `@moc-global/eslint-config/vitest` | default |

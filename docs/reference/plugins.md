@@ -28,7 +28,7 @@ SonarSource's code-quality and bug-detection rules (`recommended` preset). It en
 
 #### `eslint-plugin-unicorn`
 
-A broad collection of "modern, more correct JavaScript" rules (`recommended` preset). It ensures the codebase prefers current platform APIs and consistent idioms over legacy patterns — for example preferring `node:` protocol imports, modern `Array`/`String` methods, and explicit error handling. The config relaxes a few opinionated rules (`no-null`, `no-array-for-each`, `prefer-top-level-await`) and configures `prevent-abbreviations` with an allow-list (`spec`, `param`, `e2e`, `rootDir`) so meaningful short names are not flagged.
+A broad collection of "modern, more correct JavaScript" rules (`recommended` preset). It ensures the codebase prefers current platform APIs and consistent idioms over legacy patterns — for example preferring `node:` protocol imports, modern `Array`/`String` methods, and explicit error handling. The config relaxes a few opinionated rules (`no-null`, `no-array-for-each`, `prefer-top-level-await`) and configures `prevent-abbreviations` with an allow-list (`spec`, `param`, `e2e`, `rootDir`, `props`/`Props`) so meaningful short names — including the universal React `*Props` convention — are not flagged.
 
 #### `eslint-plugin-promise`
 
@@ -124,7 +124,7 @@ These are optional `peerDependencies`. Install them only for the frameworks you 
 
 #### `eslint-plugin-react`
 
-The canonical React linting plugin (`recommended` + `jsx-runtime` presets). It ensures correct JSX and component usage: valid prop types and usage, no missing `key` props in lists, no deprecated lifecycle patterns, and — via `jsx-runtime` — that the new automatic JSX transform is respected (no spurious "React must be in scope" errors). React version is auto-detected.
+The canonical React linting plugin (`recommended` + `jsx-runtime` presets). It ensures correct JSX and component usage: valid prop types and usage, no missing `key` props in lists, no deprecated lifecycle patterns, and — via `jsx-runtime` — that the new automatic JSX transform is respected (no spurious "React must be in scope" errors). The config resolves the React version from your installed `react` package and pins it in `settings.react.version` (it does **not** use the plugin's `'detect'` mode, whose version detector calls a `context.getFilename()` API removed in modern ESLint).
 
 #### `eslint-plugin-react-hooks`
 
@@ -134,9 +134,9 @@ Rules of Hooks enforcement (`recommended-latest` preset). It ensures Hooks are o
 
 Fast Refresh safety (`vite` preset). It ensures component modules stay compatible with hot module replacement by flagging exports that would break Fast Refresh (for example mixing component and non-component exports in one file). The benefit is a reliable dev experience.
 
-#### `eslint-plugin-react-compiler`
+#### `eslint-plugin-react-compiler` (opt-in — not part of the React stack)
 
-React Compiler validation (opt-in, `src/config/react/react-compiler.eslint.ts`). When a project has the React 19 compiler enabled, `react-compiler/react-compiler` ensures components follow the rules the compiler depends on for safe auto-memoization, surfacing code the compiler would otherwise bail out on.
+React Compiler validation. Unlike the three plugins above, this is **not** activated by the React stack and is **not** auto-installed: it is an optional peer that `moc()` never loads. Enable it explicitly via the `@moc-global/eslint-config/react-compiler` export (see [Stacks → React Compiler](/guide/stacks#react-compiler-opt-in)) only when your project runs the React 19 compiler. When enabled, `react-compiler/react-compiler` ensures components follow the rules the compiler depends on for safe auto-memoization, surfacing code the compiler would otherwise bail out on.
 
 ### Vue
 
