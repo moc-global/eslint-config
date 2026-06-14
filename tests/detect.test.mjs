@@ -2,7 +2,7 @@ import { fileURLToPath } from 'node:url';
 
 import { describe, expect, it } from 'vitest';
 
-import { detectStacks, installedDependencies, readManifest } from '../src/detect.mjs';
+import { detectStacks, installedDependencies, readManifest } from '../src/core/detect.js';
 
 /**
  * Resolves a detection fixture directory to an absolute path.

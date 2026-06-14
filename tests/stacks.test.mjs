@@ -2,7 +2,7 @@ import { createRequire } from 'node:module';
 
 import { describe, expect, it } from 'vitest';
 
-import { EXTRAS, PACKAGE_NAME, requiredPlugins, STACKS } from '../src/cli/stacks.mjs';
+import { EXTRAS, PACKAGE_NAME, requiredPlugins, STACKS } from '../src/core/manifest.js';
 
 const require = createRequire(import.meta.url);
 const package_ = require('../package.json');

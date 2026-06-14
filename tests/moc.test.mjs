@@ -2,7 +2,7 @@ import { fileURLToPath } from 'node:url';
 
 import { describe, expect, it } from 'vitest';
 
-import { moc } from '../src/index.mjs';
+import { moc } from '../src/index.js';
 
 const bareDirectory = fileURLToPath(new URL('../fixtures/detect/bare', import.meta.url));
 

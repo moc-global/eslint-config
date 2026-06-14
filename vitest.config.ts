@@ -8,8 +8,10 @@ export default defineConfig({
     hookTimeout: 30_000,
     coverage: {
       provider: 'v8',
-      include: ['src/**/*.mjs'],
-      exclude: ['src/**/*.eslint.mjs', 'src/logger.mjs', 'src/tsconfig.utils.mjs'],
+      include: ['src/**/*.ts'],
+      // Declarative rule modules (config/) and pure helpers are validated via
+      // composition/integration, not line coverage.
+      exclude: ['src/config/**', 'src/core/logger.ts', 'src/core/tsconfig-utils.ts', 'src/types/**'],
     },
   },
 });

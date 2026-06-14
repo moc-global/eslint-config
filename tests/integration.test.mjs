@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { ESLint } from 'eslint';
 import { beforeAll, describe, expect, it } from 'vitest';
 
-import { moc } from '../src/index.mjs';
+import { moc } from '../src/index.js';
 
 const fixtureDirectory = fileURLToPath(new URL('../fixtures/node-ts', import.meta.url));
 

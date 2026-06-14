@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { generateConfigFile, installCommand, isExtra, isStack } from '../src/cli/project.mjs';
+import { generateConfigFile, installCommand, isExtra, isStack } from '../src/cli/project.js';
 
 describe('installCommand', () => {
   it('builds npm install command', () => {
