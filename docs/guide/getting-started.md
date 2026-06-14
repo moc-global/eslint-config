@@ -47,7 +47,7 @@ npm i -D @moc-global/eslint-config eslint
 ```bash [React]
 npm i -D @moc-global/eslint-config eslint \
   eslint-plugin-react eslint-plugin-react-hooks \
-  eslint-plugin-react-refresh eslint-plugin-react-compiler
+  eslint-plugin-react-refresh
 ```
 
 ```bash [Vue]

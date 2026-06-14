@@ -8,12 +8,31 @@ A **stack** is your primary framework. An **add-on** layers extra rules onto any
 |---|---|---|---|
 | Node / TypeScript | _(default)_ | always the base | none — all bundled |
 | NestJS | `nest: true` | `@nestjs/core`, `@nestjs/common` | `@darraghor/eslint-plugin-nestjs-typed` |
-| React | `react: true` | `react`, `react-dom`, `next` | `eslint-plugin-react`, `-react-hooks`, `-react-refresh`, `-react-compiler` |
+| React | `react: true` | `react`, `react-dom`, `next` | `eslint-plugin-react`, `-react-hooks`, `-react-refresh` |
 | Vue | `vue: true` | `vue`, `nuxt` | `eslint-plugin-vue`, `vue-eslint-parser` |
 
 - **Node** is always present. Every other stack builds on it.
 - **NestJS** *replaces* the base call internally (it is Node + Nest rules), so you don't combine `nest` with raw Node.
 - **React** and **Vue** *layer onto* the Node base.
+
+### React Compiler (opt-in)
+
+The React stack does **not** enable the React Compiler rules by default, and
+`eslint-plugin-react-compiler` is an *optional* peer — it is not auto-installed.
+Enable it explicitly only if you run the React Compiler:
+
+```js
+import { moc } from '@moc-global/eslint-config';
+import reactCompiler from '@moc-global/eslint-config/react-compiler';
+
+const config = await moc();
+
+export default [...config, ...reactCompiler];
+```
+
+```bash
+npm i -D eslint-plugin-react-compiler
+```
 
 ### Vue: JS vs. TypeScript SFCs
 
