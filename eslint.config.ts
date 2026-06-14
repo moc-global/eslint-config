@@ -12,7 +12,8 @@ const repoConfig: Linter.Config[] = [
   {
     name: 'repo/ignores',
     // dist is generated; fixtures hold deliberately-bad code; docs is VitePress; coverage is generated.
-    ignores: ['dist/**', 'fixtures/**', 'docs/**', 'coverage/**'],
+    // examples/ are standalone consumer projects with their own eslint config and node_modules.
+    ignores: ['dist/**', 'fixtures/**', 'docs/**', 'coverage/**', 'examples/**'],
   },
   // Enforce the package's own layering with eslint-plugin-boundaries:
   //   config ✗→ cli, cli ✗→ config, core is a leaf (✗→ cli, config).

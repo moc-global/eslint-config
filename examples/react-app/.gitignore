@@ -1,0 +1,6 @@
+node_modules/
+dist/
+*.tgz
+# The lockfile pins the local tarball's integrity hash, which changes on every
+# rebuild — let `npm install` regenerate it.
+package-lock.json

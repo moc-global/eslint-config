@@ -1,0 +1,21 @@
+{
+  "name": "typescript-app-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Example Node.js + TypeScript project consuming @moc-global/eslint-config",
+  "engines": {
+    "node": "^22.21.0 || >=24.10.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@moc-global/eslint-config": "file:../../moc-global-eslint-config-2.0.0.tgz",
+    "@types/node": "^22.10.0",
+    "eslint": "^10.2.1",
+    "typescript": "^5.7.0"
+  }
+}

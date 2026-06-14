@@ -1,0 +1,26 @@
+{
+  "name": "react-app-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Example React + TypeScript project consuming @moc-global/eslint-config",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@moc-global/eslint-config": "file:../../moc-global-eslint-config-2.0.0.tgz",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "eslint": "^10.2.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "typescript": "^5.7.0"
+  }
+}
