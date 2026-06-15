@@ -49,7 +49,7 @@ SFCs with `moc({ vueTs: true })`):
 They double as living documentation **and** as a verification gate:
 `npm run verify:examples` installs the freshly-packed config into each one and runs its
 lint + typecheck, so a rule or plugin that breaks in a real consumer install fails
-loudly. CI runs this on every push and PR.
+loudly. The husky **pre-push** hook runs it locally before every push.
 
 ## Installing without a public registry
 
@@ -105,10 +105,11 @@ npm run verify:examples  # install the packed config into examples/* and lint ea
 npm run docs:dev
 ```
 
-A **husky `pre-push` hook** runs `lint` + `typecheck` + `test:run` automatically before
-every push (the dogfood tests there compose `moc()` for each stack and lint a fixture, so
-a broken rule or plugin is caught locally). CI additionally runs the heavier
-`verify:examples` real-install check.
+All checks run **locally** via a **husky `pre-push` hook** before every push:
+`lint` + `typecheck` + `test:run` (whose dogfood tests compose `moc()` for each stack and
+lint a fixture) + `pack:check` + `verify:examples`. A GitHub Actions workflow
+(`.github/workflows/ci.yml`) is kept on hand but **disabled** for now (manual-only). Use
+`git push --no-verify` to skip the hook for a one-off push.
 
 ## License
 
