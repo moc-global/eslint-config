@@ -1,0 +1,6 @@
+# Pre-push gate: lint the config's own source, typecheck, and run the test
+# suite — which includes the framework-stack dogfood tests that compose moc()
+# for React / NestJS / Vue and lint a fixture, catching failing rules or plugins
+# before they leave your machine. The heavier real-consumer-install check
+# (`npm run verify:examples`) runs in CI, where its ~4 npm installs are fine.
+npm run lint && npm run typecheck && npm run test:run

@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Husky's git hooks are irrelevant in CI; skip them so `npm ci`'s `prepare`
+# step just builds dist/.
+env:
+  HUSKY: '0'
+
+jobs:
+  checks:
+    name: Lint, typecheck & test (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ['22', '24']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test:run
+      - run: npm run pack:check
+
+  examples:
+    name: Verify example consumers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci
+      # Installs the packed tarball into examples/{typescript,react,nest,vue}-app
+      # and runs each one's typecheck + lint, so a rule or plugin that breaks in a
+      # real consumer install fails the build.
+      - run: npm run verify:examples
