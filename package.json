@@ -209,5 +209,9 @@
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/moc-global/eslint-config.git"
+  },
+  "homepage": "https://github.com/moc-global/eslint-config#readme",
+  "bugs": {
+    "url": "https://github.com/moc-global/eslint-config/issues"
   }
 }

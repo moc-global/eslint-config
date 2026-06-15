@@ -1,0 +1,21 @@
+# Normalize line endings. Text files are stored as LF and checked out as LF on
+# every platform — important because the husky hook and shell scripts below are
+# executed by bash and would break if checked out with CRLF on Windows.
+* text=auto eol=lf
+
+*.sh      text eol=lf
+.husky/*  text eol=lf
+
+# Declared-binary files are never normalized.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.tgz   binary
+
+# Generated/large files: collapse in diffs and exclude from language stats.
+package-lock.json linguist-generated -diff
+dist/**           linguist-generated
