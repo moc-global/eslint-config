@@ -59,7 +59,7 @@ authored in TypeScript and **builds itself on install** via the `prepare` script
 
 ```jsonc
 // git dependency — `prepare` compiles dist/ on install
-"@moc-global/eslint-config": "git+ssh://git@github.com/moc-global/eslint-config.git#semver:^2"
+"@moc-global/eslint-config": "git+ssh://git@github.com/dmytro-vakulenko-moc/eslint-config.git#semver:^2"
 ```
 
 ```bash
@@ -82,7 +82,11 @@ See [Existing & legacy projects](./docs/guide/existing-projects.md).
 
 ## Documentation
 
-Full docs (VitePress): `npm run docs:dev`. Start with:
+📖 **Published:** [dmytro-vakulenko-moc.github.io/eslint-config](https://dmytro-vakulenko-moc.github.io/eslint-config/)
+— deployed from `main` by [`.github/workflows/docs.yml`](./.github/workflows/docs.yml)
+(live once GitHub Pages is enabled with Source: "GitHub Actions").
+
+Or run it locally (`npm run docs:dev`). Start with:
 
 - [Why this config](./docs/guide/why.md)
 - [Getting started](./docs/guide/getting-started.md)
@@ -107,8 +111,9 @@ npm run docs:dev
 
 All checks run **locally** via a **husky `pre-push` hook** before every push:
 `lint` + `typecheck` + `test:run` (whose dogfood tests compose `moc()` for each stack and
-lint a fixture) + `pack:check` + `verify:examples`. A GitHub Actions workflow
-(`.github/workflows/ci.yml`) is kept on hand but **disabled** for now (manual-only). Use
+lint a fixture) + `docs:build` + `pack:check` + `verify:examples`. The checks workflow
+(`.github/workflows/ci.yml`) is kept on hand but **disabled** for now (manual-only); the
+docs deploy (`.github/workflows/docs.yml`) is the one active workflow. Use
 `git push --no-verify` to skip the hook for a one-off push.
 
 ## License

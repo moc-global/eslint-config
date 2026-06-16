@@ -1,6 +1,25 @@
 import { defineConfig } from 'vitepress';
 
+/**
+ * Resolves the VitePress base URL for GitHub Pages.
+ * Local dev stays at "/"; in CI the site is a **project page** served from
+ * "/<repo>/", derived from GITHUB_REPOSITORY (so any account works, no hardcoding).
+ * Note: a user/org site (a `<owner>.github.io` repo) or a custom domain must be
+ * served from "/" — that case isn't auto-handled here and would need adjusting.
+ * @returns {string} The base path, e.g. "/" locally or "/eslint-config/" on CI.
+ */
+function resolveBase() {
+  if (!process.env.GITHUB_ACTIONS) {
+    return '/';
+  }
+
+  const repo = process.env.GITHUB_REPOSITORY?.split('/')[1];
+
+  return repo ? `/${repo}/` : '/';
+}
+
 export default defineConfig({
+  base: resolveBase(),
   title: '@moc-global/eslint-config',
   description: 'The shared, company-wide ESLint flat config for Node.js, NestJS, React, and Vue — with a one-command installer.',
   lang: 'en-US',
@@ -11,7 +30,7 @@ export default defineConfig({
     nav: [
       { text: 'Guide', link: '/guide/why' },
       { text: 'Reference', link: '/reference/plugins' },
-      { text: 'Changelog', link: '/guide/versioning' },
+      { text: 'Changelog', link: '/changelog' },
     ],
 
     sidebar: [
@@ -41,11 +60,14 @@ export default defineConfig({
       },
       {
         text: 'Project',
-        items: [{ text: 'Contributing', link: '/guide/contributing' }],
+        items: [
+          { text: 'Contributing', link: '/guide/contributing' },
+          { text: 'Changelog', link: '/changelog' },
+        ],
       },
     ],
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/moc-global/eslint-config' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/dmytro-vakulenko-moc/eslint-config' }],
 
     footer: {
       message: 'Internal tooling — Master of Code Global',

@@ -4,10 +4,12 @@
 #   typecheck      tsc --noEmit
 #   test:run       vitest, incl. the React/Nest/Vue dogfood tests (compose moc()
 #                  + lint a fixture) — catches failing rules or plugins
+#   docs:build     VitePress build — catches dead links before they reach the
+#                  Pages deploy (GitHub CI is disabled, so this is the gate)
 #   pack:check     the published tarball ships only dist/
 #   verify:examples pack the config + install it into every examples/* project
 #                  and lint/typecheck each (a real consumer install)
 #
 # verify:examples does ~4 npm installs, so this hook is not instant. To skip it
 # for a one-off push: `git push --no-verify`.
-npm run lint && npm run typecheck && npm run test:run && npm run pack:check && npm run verify:examples
+npm run lint && npm run typecheck && npm run test:run && npm run docs:build && npm run pack:check && npm run verify:examples
