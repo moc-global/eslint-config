@@ -98,7 +98,7 @@ TypeScript and compiles itself to `dist/` on install via the `prepare` script
 ```json [Git dependency]
 {
   "devDependencies": {
-    "@moc-global/eslint-config": "git+ssh://git@github.com/moc-global/eslint-config.git#semver:^2"
+    "@moc-global/eslint-config": "git+ssh://git@github.com/dmytro-vakulenko-moc/eslint-config.git#semver:^2"
   }
 }
 ```

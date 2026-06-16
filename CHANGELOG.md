@@ -4,8 +4,8 @@ All notable changes to `@moc-global/eslint-config` are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 this project adheres to [Semantic Versioning](https://semver.org/). See the
-[versioning policy](./docs/guide/versioning.md) for what counts as a major,
-minor, or patch.
+[versioning policy](https://github.com/dmytro-vakulenko-moc/eslint-config/blob/main/docs/guide/versioning.md)
+for what counts as a major, minor, or patch.
 
 ## [Unreleased]
 
@@ -58,5 +58,5 @@ distribution model, layout, and minimum tooling versions all changed.
   the false-positive-prone `detect-object-injection`; and relaxes
   `max-classes-per-file`.
 
-[Unreleased]: https://github.com/moc-global/eslint-config/compare/v2.0.0...HEAD
-[2.0.0]: https://github.com/moc-global/eslint-config/releases/tag/v2.0.0
+[Unreleased]: https://github.com/dmytro-vakulenko-moc/eslint-config/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/dmytro-vakulenko-moc/eslint-config/releases/tag/v2.0.0
