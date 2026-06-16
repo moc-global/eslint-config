@@ -27,6 +27,8 @@ export default defineConfig({
   lastUpdated: true,
 
   themeConfig: {
+    logo: '/logo.svg',
+
     nav: [
       { text: 'Guide', link: '/guide/why' },
       { text: 'Reference', link: '/reference/plugins' },

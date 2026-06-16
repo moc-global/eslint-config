@@ -1,0 +1,26 @@
+/**
+ * MOC brand-red accent overrides for the VitePress default theme.
+ *
+ * Colors come from the MOC brand palette (masterofcode.com): #f1563c is the primary
+ * brand red (matches docs/public/logo.svg exactly) and #de3c21 is the brand hover red.
+ *
+ * Accent values are WCAG AA contrast-tested per theme. A single red cannot serve link
+ * TEXT on both a light and a dark background at AA (4.5:1), so --vp-c-brand-1 differs
+ * per theme; the brand red is reused for solid button fills (white label, large-text AA).
+ */
+
+:root {
+  --vp-c-brand-1: #d6401f; /* links / accent text — 4.56:1 on white (AA) */
+  --vp-c-brand-2: #de3c21; /* hover — MOC's own hover red */
+  --vp-c-brand-3: #f1563c; /* solid button fill — brand primary, white label (3.4:1, large-text AA) */
+  --vp-c-brand-soft: rgba(241, 86, 60, 0.14);
+
+  --vp-home-hero-name-color: #f1563c; /* home hero title → brand red */
+}
+
+.dark {
+  --vp-c-brand-1: #f1563c; /* pure brand red — 5.18:1 on dark (AA) */
+  --vp-c-brand-2: #de3c21;
+  --vp-c-brand-3: #f1563c;
+  --vp-c-brand-soft: rgba(241, 86, 60, 0.22);
+}

@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/public/logo.svg" alt="@moc-global/eslint-config" width="140">
+</p>
+
 # @moc-global/eslint-config
 
 > The shared, company-wide ESLint flat config for Node.js, NestJS, React, and Vue — with a one-command installer.

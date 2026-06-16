@@ -5,6 +5,9 @@ hero:
   name: "@moc-global/eslint-config"
   text: "One ESLint config for every project"
   tagline: A strict, batteries-included flat config for Node.js, NestJS, React, and Vue — installed with one command, governed in one place.
+  image:
+    src: /logo.svg
+    alt: "@moc-global/eslint-config"
   actions:
     - theme: brand
       text: Get started
