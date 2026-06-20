@@ -58,4 +58,62 @@ describe('moc()', () => {
 
     expect(keys.has('react')).toBe(false);
   });
+
+  it('does not register Fast Refresh for a pristine React stack', async () => {
+    const keys = pluginKeys(await moc({ rootDir: bareDirectory, react: true }));
+
+    // Fast Refresh is a bundler concern; the pristine React stack does not load it.
+    expect(keys.has('react-refresh')).toBe(false);
+  });
+
+  it('composes Next as React + Next, applying the React layer exactly once', async () => {
+    const config = await moc({ rootDir: bareDirectory, next: true });
+    const keys = pluginKeys(config);
+
+    expect(keys.has('@next/next')).toBe(true);
+    expect(keys.has('react')).toBe(true);
+    // React applied exactly once — not the Next stack plus a standalone React
+    // stack. A Set would hide duplication, so count the named React rule block.
+    const reactRuleBlocks = config.filter((block) => block && block.name === 'react/rules');
+
+    expect(reactRuleBlocks).toHaveLength(1);
+  });
+
+  it('auto-detects Next and supersedes React (no double React layer)', async () => {
+    const nextDirectory = fileURLToPath(new URL('../fixtures/detect/next', import.meta.url));
+    const config = await moc({ rootDir: nextDirectory });
+
+    expect(pluginKeys(config).has('@next/next')).toBe(true);
+    expect(config.filter((block) => block && block.name === 'react/rules')).toHaveLength(1);
+  });
+
+  it('falls back to React when next: false opts out of an auto-detected Next project', async () => {
+    const nextDirectory = fileURLToPath(new URL('../fixtures/detect/next', import.meta.url));
+    const config = await moc({ rootDir: nextDirectory, next: false });
+    const keys = pluginKeys(config);
+
+    // Next is disabled, but a Next project is still a React project — React must
+    // remain, not collapse to a node-only lint.
+    expect(keys.has('@next/next')).toBe(false);
+    expect(keys.has('react')).toBe(true);
+    expect(config.filter((block) => block && block.name === 'react/rules')).toHaveLength(1);
+  });
+
+  it('enables the Vite Fast Refresh add-on for a Vite project', async () => {
+    const viteDirectory = fileURLToPath(new URL('../fixtures/detect/vite', import.meta.url));
+    const config = await moc({ rootDir: viteDirectory });
+
+    expect(config.some((block) => block && block.name === 'vite/react-refresh')).toBe(true);
+  });
+
+  it('gates the Vite add-on off when the Next stack is active (no duplicate react-refresh)', async () => {
+    const nextDirectory = fileURLToPath(new URL('../fixtures/detect/next', import.meta.url));
+    // Force the vite add-on on a Next project: Next owns Fast Refresh, so the
+    // vite block must be suppressed to avoid registering react-refresh twice
+    // (which crashes ESLint) and clobbering Next's allowExportNames.
+    const config = await moc({ rootDir: nextDirectory, vite: true });
+
+    expect(config.some((block) => block && block.name === 'vite/react-refresh')).toBe(false);
+    expect(config.filter((block) => block && block.name === 'next/react-refresh')).toHaveLength(1);
+  });
 });

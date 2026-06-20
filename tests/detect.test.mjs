@@ -44,6 +44,30 @@ describe('detectStacks', () => {
     expect(detectStacks(fixture('vue')).stacks).toContain('vue');
   });
 
+  it('detects both next and react for a Next project (precedence applied in composition)', () => {
+    const result = detectStacks(fixture('next'));
+
+    expect(result.stacks).toContain('next');
+    // Detection is intentionally NOT lossy: both are reported. `moc()` applies
+    // the React layer exactly once via the Next stack, and falls back to React
+    // when `next` is disabled — so React must remain detectable here.
+    expect(result.stacks).toContain('react');
+  });
+
+  it('still detects bare react when next is absent', () => {
+    const result = detectStacks(fixture('react'));
+
+    expect(result.stacks).toContain('react');
+    expect(result.stacks).not.toContain('next');
+  });
+
+  it('detects the vite add-on alongside react', () => {
+    const result = detectStacks(fixture('vite'));
+
+    expect(result.stacks).toContain('react');
+    expect(result.extras).toContain('vite');
+  });
+
   it('detects nest and jest', () => {
     const result = detectStacks(fixture('nest'));
 

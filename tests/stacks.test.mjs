@@ -10,7 +10,7 @@ const package_ = require('../package.json');
 describe('STACKS manifest', () => {
   it('exposes node as the base stack and the framework stacks', () => {
     expect(STACKS.node.base).toBe(true);
-    expect(Object.keys(STACKS)).toEqual(expect.arrayContaining(['node', 'nest', 'react', 'vue']));
+    expect(Object.keys(STACKS)).toEqual(expect.arrayContaining(['node', 'nest', 'react', 'next', 'vue']));
   });
 
   it('derives the package name from package.json', () => {
@@ -39,12 +39,31 @@ describe('STACKS manifest', () => {
 });
 
 describe('requiredPlugins', () => {
-  it('returns the react plugin set for a react selection', () => {
+  it('returns the pristine react plugin set for a react selection (no Fast Refresh)', () => {
     const plugins = requiredPlugins(['react']);
 
+    expect(Object.keys(plugins)).toEqual(expect.arrayContaining(['eslint-plugin-react', 'eslint-plugin-react-hooks']));
+
+    // Fast Refresh moved out of the pristine React stack: it is a bundler concern
+    // supplied by the `vite` add-on / `next` stack, so it is not a React peer.
+    expect(plugins).not.toHaveProperty('eslint-plugin-react-refresh');
+  });
+
+  it('returns react peers + react-refresh + the Next plugin for a next selection', () => {
+    const plugins = requiredPlugins(['next']);
+
     expect(Object.keys(plugins)).toEqual(
-      expect.arrayContaining(['eslint-plugin-react', 'eslint-plugin-react-hooks', 'eslint-plugin-react-refresh']),
+      expect.arrayContaining([
+        'eslint-plugin-react',
+        'eslint-plugin-react-hooks',
+        'eslint-plugin-react-refresh',
+        '@next/eslint-plugin-next',
+      ]),
     );
+  });
+
+  it('requires eslint-plugin-react-refresh for the vite add-on', () => {
+    expect(requiredPlugins(['vite'])).toHaveProperty('eslint-plugin-react-refresh');
   });
 
   it('does NOT require eslint-plugin-react-compiler (it is opt-in, never loaded by moc())', () => {

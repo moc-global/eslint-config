@@ -1,0 +1,6 @@
+{
+  "name": "fixture-detect-vite",
+  "private": true,
+  "dependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" },
+  "devDependencies": { "vite": "^5.0.0" }
+}

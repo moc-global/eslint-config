@@ -30,6 +30,10 @@ describe('generateConfigFile', () => {
     expect(file).toContain('zod: true,');
   });
 
+  it('emits a next: true flag for a Next base', () => {
+    expect(generateConfigFile({ base: 'next', extras: [] })).toContain('next: true,');
+  });
+
   it('emits vueTs only when requested', () => {
     expect(generateConfigFile({ base: 'vue', extras: [], vueTs: true })).toContain('vueTs: true,');
     expect(generateConfigFile({ base: 'vue', extras: [] })).not.toContain('vueTs: true,');
@@ -39,8 +43,10 @@ describe('generateConfigFile', () => {
 describe('isStack / isExtra', () => {
   it('validates known keys', () => {
     expect(isStack('react')).toBe(true);
+    expect(isStack('next')).toBe(true);
     expect(isStack('nope')).toBe(false);
     expect(isExtra('vitest')).toBe(true);
+    expect(isExtra('vite')).toBe(true);
     expect(isExtra('react')).toBe(false);
   });
 });

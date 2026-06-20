@@ -7,6 +7,8 @@ const SUBPATHS = [
   { path: '../src/index.js', named: ['moc', 'createNodeConfig', 'detectStacks', 'STACKS', 'EXTRAS'] },
   { path: '../src/config/node.eslint.js', named: ['createNodeConfig'], default: true },
   { path: '../src/config/react.eslint.js', named: ['createReactConfig'] },
+  { path: '../src/config/next.eslint.js', named: ['createNextConfig'], default: true },
+  { path: '../src/config/vite.eslint.js', default: true },
   { path: '../src/config/vue.eslint.js', named: ['createVueConfig', 'createVueTsConfig'] },
   { path: '../src/config/nest.eslint.js', named: ['createNestConfig'] },
   { path: '../src/config/vitest.eslint.js', default: true },
