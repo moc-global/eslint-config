@@ -4,7 +4,7 @@
 
 # @moc-global/eslint-config
 
-> The shared, company-wide ESLint flat config for Node.js, NestJS, React, and Vue — with a one-command installer.
+> The shared, company-wide ESLint flat config for Node.js, NestJS, React, Next.js, and Vue — with a one-command installer.
 
 A single, versioned package that encodes one strict standard for our TypeScript and JavaScript. Core plugins ship bundled and version-locked; framework plugins load on demand. Adopt it in one command, govern it in one place.
 
@@ -33,13 +33,13 @@ npm run lint
 
 ## What it covers
 
-- **Stacks:** Node/TypeScript (base), NestJS, React, Vue
-- **Add-ons:** Vitest, Jest, Zod, i18next, Tailwind CSS
+- **Stacks:** Node/TypeScript (base), NestJS, React, Next.js (= React + Next), Vue
+- **Add-ons:** Vite (React Fast Refresh), Vitest, Jest, Zod, i18next, Tailwind CSS
 - **Out of the box:** type-aware TS linting, import hygiene, security rules, naming conventions, Prettier integration, dead-code detection, and more — see the [rules reference](./docs/reference/plugins.md).
 
 ## Examples
 
-Four runnable example consumers live in [`examples/`](./examples) — each installs the
+Five runnable example consumers live in [`examples/`](./examples) — each installs the
 packed tarball and lints with a bare `export default moc()` (Vue opts into type-aware
 SFCs with `moc({ vueTs: true })`):
 
@@ -47,6 +47,7 @@ SFCs with `moc({ vueTs: true })`):
 | --- | --- |
 | [`typescript-app`](./examples/typescript-app) | Node + TypeScript, path aliases, layered architecture |
 | [`react-app`](./examples/react-app) | React 19 + TypeScript (JSX runtime) |
+| [`next-app`](./examples/next-app) | Next.js 16 — App Router + Pages Router, Route Handler, `'use client'` |
 | [`nest-app`](./examples/nest-app) | NestJS — decorators, class-validator DTOs, Swagger |
 | [`vue-app`](./examples/vue-app) | Vue 3 `<script setup lang="ts">` single-file components |
 
@@ -68,7 +69,7 @@ authored in TypeScript and **builds itself on install** via the `prepare` script
 
 ```bash
 # or a packed tarball (the tarball ships the prebuilt dist/)
-npm run build && npm pack && npm i -D ./moc-global-eslint-config-2.0.0.tgz
+npm run build && npm pack && npm i -D ./moc-global-eslint-config-2.1.0.tgz
 ```
 
 Once published, the registry tarball ships the prebuilt `dist/` (with `.d.ts`), so consumers need no build step.

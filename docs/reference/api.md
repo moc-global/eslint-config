@@ -18,9 +18,11 @@ All options are optional. Stack/add-on flags are `boolean | undefined` — `true
 |---|---|---|---|
 | `node` | `boolean` | always on | The Node/TypeScript base. Always included. |
 | `nest` | `boolean` | auto | NestJS rules (replaces the base with Node + Nest). |
-| `react` | `boolean` | auto | React, hooks, and refresh rules. (React Compiler is opt-in — see `/react-compiler`.) |
+| `react` | `boolean` | auto | React, hooks, and JSX-runtime rules. (Fast Refresh is the `vite` add-on; React Compiler is opt-in — see `/react-compiler`.) |
+| `next` | `boolean` | auto | Next.js rules — React + the official `@next/eslint-plugin-next` Core Web Vitals rules. Supersedes `react`. |
 | `vue` | `boolean` | auto | Vue SFC rules. |
 | `vueTs` | `boolean` | `false` | Use the TypeScript parser chain for `.vue` files. |
+| `vite` | `boolean` | auto | React Fast Refresh rules (auto-enabled when `vite` is a dependency). |
 | `vitest` | `boolean` | auto | Vitest test-file rules (plugin bundled). |
 | `jest` | `boolean` | auto | Jest test-file rules. |
 | `zod` | `boolean` | auto | Zod schema rules (plugin bundled). |
@@ -48,8 +50,10 @@ Each stack is also exported on its own subpath, importing its optional peers dir
 |---|---|
 | `@moc-global/eslint-config` | `moc` (default & named), `createNodeConfig`, `detectStacks`, `STACKS`, `EXTRAS` |
 | `@moc-global/eslint-config/node` | `createNodeConfig`, default |
-| `@moc-global/eslint-config/react` | `createReactConfig`, default |
+| `@moc-global/eslint-config/react` | `createReactConfig`, default (pristine — no Fast Refresh) |
+| `@moc-global/eslint-config/next` | `createNextConfig`, default (React + Next) |
 | `@moc-global/eslint-config/react-compiler` | default (opt-in; requires `eslint-plugin-react-compiler`) |
+| `@moc-global/eslint-config/vite` | default (React Fast Refresh; requires `eslint-plugin-react-refresh`) |
 | `@moc-global/eslint-config/vue` | `createVueConfig`, `createVueTsConfig`, default |
 | `@moc-global/eslint-config/nest` | `createNestConfig`, default |
 | `@moc-global/eslint-config/vitest` | default |

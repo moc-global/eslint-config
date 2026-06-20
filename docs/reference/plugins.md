@@ -130,13 +130,19 @@ The canonical React linting plugin (`recommended` + `jsx-runtime` presets). It e
 
 Rules of Hooks enforcement (`recommended-latest` preset). It ensures Hooks are only called at the top level and only from React functions, and that effect dependency arrays are complete. This catches the single most common source of subtle React bugs — stale closures and conditionally-called hooks.
 
-#### `eslint-plugin-react-refresh`
+#### `eslint-plugin-react-refresh` (not in the React stack — a bundler add-on)
 
-Fast Refresh safety (`vite` preset). It ensures component modules stay compatible with hot module replacement by flagging exports that would break Fast Refresh (for example mixing component and non-component exports in one file). The benefit is a reliable dev experience.
+Fast Refresh safety. It flags exports that would break hot module replacement (for example mixing component and non-component exports in one file). Because Fast Refresh is a bundler/HMR concern, the **React stack is pristine and does not load it** — it is supplied where it actually applies: the **`vite` add-on** (auto-detected from `vite`) uses the `vite` preset (`allowConstantExport`), and the **Next.js stack** uses the `next` preset (allowing Next's route exports). See [Stacks → Vite Fast Refresh](/guide/stacks#vite-fast-refresh).
 
 #### `eslint-plugin-react-compiler` (opt-in — not part of the React stack)
 
 React Compiler validation. Unlike the three plugins above, this is **not** activated by the React stack and is **not** auto-installed: it is an optional peer that `moc()` never loads. Enable it explicitly via the `@moc-global/eslint-config/react-compiler` export (see [Stacks → React Compiler](/guide/stacks#react-compiler-opt-in)) only when your project runs the React 19 compiler. When enabled, `react-compiler/react-compiler` ensures components follow the rules the compiler depends on for safe auto-memoization, surfacing code the compiler would otherwise bail out on.
+
+### Next.js
+
+#### `@next/eslint-plugin-next`
+
+The official Next.js plugin (`core-web-vitals` config). The Next stack is **React + Next** — it composes the React plugins above and layers this plugin on top. The config applies `core-web-vitals`, which already contains every `recommended` rule plus the Core Web Vitals warn→error upgrades (`@next/next/no-html-link-for-pages`, `@next/next/no-sync-scripts`). It catches Next-specific mistakes the framework cares about: `<img>` instead of `next/image`, `<a>` instead of `next/link` for internal routes, synchronous scripts, `next/head`/`next/document` misuse, missing `next/script` ids, and font/Polyfill pitfalls. The config uses this plugin **directly** rather than `eslint-config-next` (which would re-bundle react/react-hooks/typescript-eslint and conflict with this package's own copies). The Next stack also allows the App Router and Pages Router export names for Fast Refresh and relaxes `jsdoc/require-jsdoc` for `route.ts`/`middleware.ts`.
 
 ### Vue
 

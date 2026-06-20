@@ -10,8 +10,8 @@
         ┌───────────────────────┼───────────────────────┐
         │                       │                        │
    Node base            Framework layer            Add-on layer
- createNodeConfig    react / vue / nest         vitest / jest / zod
-   (always)          (optional peers)            i18n / tailwind
+ createNodeConfig   react / next / vue / nest   vite / vitest / jest
+   (always)          (optional peers)           zod / i18n / tailwind
         │                       │                        │
         └───────────────────────┴────────────────────────┘
                                 │
@@ -25,8 +25,8 @@
 ESLint flat config is last-write-wins: a later config block overrides an earlier one for any file it matches. `moc()` owns that order so you don't have to:
 
 1. **Node base** (`createNodeConfig`) — JavaScript + TypeScript rules, with per-file overrides placed last internally.
-2. **Framework layer** — React, Vue, or (as a base replacement) NestJS, layered on top of the Node base.
-3. **Add-ons** — Vitest/Jest test rules, Zod, i18n, Tailwind.
+2. **Framework layer** — React, Next.js, Vue, or (as a base replacement) NestJS, layered on top of the Node base. **Next.js is React + Next rules**, so it supersedes the React stack: the React layer is composed inside the Next stack and applied exactly once, never twice.
+3. **Add-ons** — Vite Fast Refresh, Vitest/Jest test rules, Zod, i18n, Tailwind.
 
 Because the umbrella controls this, your config file stays a single `moc()` call and still gets correct precedence.
 
@@ -48,7 +48,7 @@ zod + vitest plugins also bundled              better-tailwindcss
 
 ## Optional peers load lazily
 
-Each framework lives behind a subpath export (`@moc-global/eslint-config/react`, `/vue`, `/nest`). `moc()` imports these **dynamically**, only when the corresponding flag is on. If a required peer is missing, you get an actionable error instead of a cryptic module-resolution failure:
+Each framework lives behind a subpath export (`@moc-global/eslint-config/react`, `/next`, `/vue`, `/nest`). `moc()` imports these **dynamically**, only when the corresponding flag is on. If a required peer is missing, you get an actionable error instead of a cryptic module-resolution failure:
 
 ```
 [@moc-global/eslint-config] The "React" config requires packages that are not installed.
@@ -61,13 +61,18 @@ This is also why `moc()` returns a **Promise** — ESLint supports async flat co
 
 ## Auto-detection
 
-`moc()` reads your `package.json` (all dependency fields) and enables stacks/add-ons whose marker packages are present — `react` → React, `@nestjs/core` → NestJS, `vitest` → Vitest rules, and so on. An explicit flag always wins:
+`moc()` reads your `package.json` (all dependency fields) and enables stacks/add-ons whose marker packages are present — `react` → React, `next` → Next.js, `@nestjs/core` → NestJS, `vite` → Vite Fast Refresh, `vitest` → Vitest rules, and so on. An explicit flag always wins:
 
 ```js
 moc()                  // fully auto-detected
 moc({ react: true })   // force React on
 moc({ vue: false })    // force Vue off even if detected
+moc({ next: false })   // force Next off even if `next` is detected
 ```
+
+::: tip Next supersedes React
+A Next.js project depends on `next`, `react`, and `react-dom`, so both stacks would match. Detection resolves this in one place: when `next` is present it **wins**, and `react` is dropped from the detected stacks. The Next stack already composes the React layer, so React is applied exactly once.
+:::
 
 ## Type-aware linting
 

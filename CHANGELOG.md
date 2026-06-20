@@ -11,6 +11,38 @@ for what counts as a major, minor, or patch.
 
 _Nothing yet._
 
+## [2.1.0]
+
+Adds a first-class **Next.js** stack and makes the React stack bundler-agnostic.
+
+### Added
+
+- **Next.js stack** (`moc({ next: true })`, auto-detected from `next`): the React
+  config plus the official `@next/eslint-plugin-next` **Core Web Vitals** rules,
+  Next-aware Fast Refresh export names (App Router **and** Pages Router), a
+  `jsdoc/require-jsdoc` relaxation for `route.ts`/`middleware.ts`, and ignores for
+  `.next/`, `out/`, and `next-env.d.ts`. Uses `@next/eslint-plugin-next` **directly**
+  (not `eslint-config-next`, which would duplicate-bundle react/react-hooks/
+  typescript-eslint). New optional peer dependency `@next/eslint-plugin-next`.
+- **`vite` add-on** (`moc({ vite: true })`, auto-detected from `vite`): supplies
+  React Fast Refresh via `eslint-plugin-react-refresh`'s `vite` preset.
+- **Subpath exports** `/next` (`createNextConfig`) and `/vite`; new `next`/`vite`
+  `moc()` flags; `next` offered by the installer wizard and `--preset`.
+- A runnable **`examples/next-app`** consumer (App Router + Pages Router) under the
+  `verify:examples` gate.
+
+### Changed
+
+- **`createReactConfig` is now pristine (bundler-agnostic).** Fast Refresh is no
+  longer baked into the React stack — it is a bundler/HMR concern now supplied by
+  the `vite` add-on (for Vite projects) or the `next` stack. `next` is removed from
+  the React stack's auto-detection; a Next.js project resolves to the **Next stack**,
+  which supersedes React and applies the React layer exactly once.
+- **Note for direct `/react`-subpath importers (not `moc()` users):** if you import
+  `@moc-global/eslint-config/react` directly and relied on the previously-bundled
+  Vite Fast Refresh, add `@moc-global/eslint-config/vite` alongside it. `moc()` users
+  are unaffected — the `vite` add-on is auto-detected from the `vite` dependency.
+
 ## [2.0.0]
 
 A ground-up rework into a standalone, shareable package. **Breaking** — the
@@ -58,5 +90,6 @@ distribution model, layout, and minimum tooling versions all changed.
   the false-positive-prone `detect-object-injection`; and relaxes
   `max-classes-per-file`.
 
-[Unreleased]: https://github.com/dmytro-vakulenko-moc/eslint-config/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/dmytro-vakulenko-moc/eslint-config/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/dmytro-vakulenko-moc/eslint-config/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/dmytro-vakulenko-moc/eslint-config/releases/tag/v2.0.0

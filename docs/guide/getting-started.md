@@ -26,7 +26,7 @@ The wizard will:
 4. Write an `eslint.config.mjs`.
 5. Add `lint` and `lint:fix` scripts to your `package.json`.
 
-For most projects it's two `Enter` presses. See the [installer reference](/guide/cli) for non-interactive flags.
+For most projects it's two `Enter` presses. A **Next.js** project is detected from its `next` dependency and offered as its own stack (Next = React + Next rules). See the [installer reference](/guide/cli) for non-interactive flags.
 
 ### Non-interactive (CI, templates, scripts)
 
@@ -46,6 +46,12 @@ npm i -D @moc-global/eslint-config eslint
 
 ```bash [React]
 npm i -D @moc-global/eslint-config eslint \
+  eslint-plugin-react eslint-plugin-react-hooks
+```
+
+```bash [Next.js]
+npm i -D @moc-global/eslint-config eslint \
+  @next/eslint-plugin-next \
   eslint-plugin-react eslint-plugin-react-hooks \
   eslint-plugin-react-refresh
 ```
@@ -105,10 +111,10 @@ TypeScript and compiles itself to `dist/` on install via the `prepare` script
 
 ```bash [Tarball]
 # In the config repo (build first; the tarball ships dist/):
-npm run build && npm pack   # → moc-global-eslint-config-2.0.0.tgz
+npm run build && npm pack   # → moc-global-eslint-config-2.1.0.tgz
 
 # In your project:
-npm i -D ./vendor/moc-global-eslint-config-2.0.0.tgz
+npm i -D ./vendor/moc-global-eslint-config-2.1.0.tgz
 ```
 
 :::

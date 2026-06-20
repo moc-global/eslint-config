@@ -62,6 +62,39 @@ Because the baseline keeps CI green, the cleanup is no longer time-critical — 
 
 Repeat until `eslint-suppressions.json` is empty. Nothing about this is big-bang; each step is independently shippable.
 
+## Migrating from `eslint-config-next`
+
+If a Next.js project already uses `eslint-config-next`, replace it — don't layer the
+two. `eslint-config-next` re-bundles its own `eslint-plugin-react`,
+`eslint-plugin-react-hooks`, and `typescript-eslint`, which would duplicate-register
+against this config's own copies and conflict with its tuning. The Next stack here
+uses `@next/eslint-plugin-next` directly and brings the React layer itself.
+
+1. Remove the old config and dependency:
+
+   ```bash
+   npm rm eslint-config-next
+   ```
+
+2. Install and initialize (the wizard detects `next` and offers the Next stack):
+
+   ```bash
+   npx @moc-global/eslint-config init
+   ```
+
+3. Your `eslint.config.mjs` becomes a single zero-config call — Next is auto-detected:
+
+   ```js
+   import { moc } from '@moc-global/eslint-config';
+
+   export default moc();
+   ```
+
+The Next stack already covers what `eslint-config-next` gave you (the
+`@next/eslint-plugin-next` Core Web Vitals rules, React, and hooks) plus this
+config's full strict baseline. Build artifacts (`.next/`, `out/`, `next-env.d.ts`)
+are ignored for you.
+
 ## What about per-rule relaxation?
 
 If a particular rule genuinely doesn't fit a project, relax it locally and visibly in that project's `eslint.config.mjs` — append a config block after `moc()`:
