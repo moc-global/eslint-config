@@ -75,11 +75,19 @@ export const STACKS: Record<string, StackDefinition> = {
     label: 'React',
     entry: 'react',
     factory: 'createReactConfig',
-    detect: ['react', 'react-dom', 'next'],
+    // `next` is intentionally absent: a Next.js project resolves to the `next`
+    // stack (which supersedes `react` in detection), not the bare React stack.
+    detect: ['react', 'react-dom'],
     plugins: {
       'eslint-plugin-react': range('eslint-plugin-react'),
       'eslint-plugin-react-hooks': range('eslint-plugin-react-hooks'),
-      'eslint-plugin-react-refresh': range('eslint-plugin-react-refresh'),
+      // `eslint-plugin-react-refresh` is intentionally absent here: the pristine
+      // React stack does not load Fast Refresh (a bundler/HMR concern). The
+      // `vite` add-on supplies `reactRefresh.configs.vite`; the `next` stack
+      // supplies `reactRefresh.configs.next`. Keeping it out of the React stack
+      // keeps required peers matched to what the stack actually loads.
+      // See add-nextjs-stack (framework-stack-compatibility).
+      //
       // `eslint-plugin-react-compiler` is intentionally absent here: `moc()`
       // never loads it (it is opt-in via the `/react-compiler` export), so it is
       // only an *optional* peer, not part of the auto-installed React stack.
@@ -87,6 +95,21 @@ export const STACKS: Record<string, StackDefinition> = {
       // zod-validation-error@3.5.4 (no `./v4` export) and crashed ESLint when
       // eslint-plugin-react-hooks requires `zod-validation-error/v4`.
       // See fix-consumer-stack-defects (framework-stack-compatibility).
+    },
+  },
+  next: {
+    label: 'Next.js',
+    entry: 'next',
+    factory: 'createNextConfig',
+    detect: ['next'],
+    plugins: {
+      // Next composes the React layer (`createNextConfig` reuses
+      // `createReactConfig`), so it needs the React peers too.
+      'eslint-plugin-react': range('eslint-plugin-react'),
+      'eslint-plugin-react-hooks': range('eslint-plugin-react-hooks'),
+      // Fast Refresh with Next's export conventions (`reactRefresh.configs.next`).
+      'eslint-plugin-react-refresh': range('eslint-plugin-react-refresh'),
+      '@next/eslint-plugin-next': range('@next/eslint-plugin-next'),
     },
   },
   vue: {
@@ -106,6 +129,16 @@ export const STACKS: Record<string, StackDefinition> = {
  * plugin ships as a dependency of this package, so no extra install is needed.
  */
 export const EXTRAS: Record<string, ExtraDefinition> = {
+  vite: {
+    label: 'Vite (React Fast Refresh)',
+    entry: 'vite',
+    factory: 'default',
+    detect: ['vite'],
+    // Not bundled: `eslint-plugin-react-refresh` is an (optional) peer, supplied
+    // here so a `moc()` Vite + React project keeps Fast Refresh linting after it
+    // moved out of the pristine React stack.
+    plugins: { 'eslint-plugin-react-refresh': range('eslint-plugin-react-refresh') },
+  },
   vitest: {
     label: 'Vitest',
     entry: 'vitest',

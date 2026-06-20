@@ -68,5 +68,12 @@ export function detectStacks(rootDir = process.cwd()): Detection {
     }
   }
 
+  // A Next.js project depends on `react` + `react-dom` + `next`, so both stacks
+  // match and are reported honestly here. The `next`-supersedes-`react`
+  // precedence is applied at composition time (`moc()` applies the React layer
+  // exactly once via the Next stack) and at display time (the installer prefers
+  // `next`). Detection is intentionally NOT lossy: dropping `react` here would
+  // leave `moc({ next: false })` on a Next project with no React fallback.
+  // See add-nextjs-stack (nextjs-stack).
   return result;
 }

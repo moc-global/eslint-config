@@ -33,7 +33,9 @@ export { detectStacks } from './core/detect.js';
 const ENTRY_IMPORTERS: Record<string, () => Promise<unknown>> = {
   nest: () => import('./config/nest.eslint.js'),
   react: () => import('./config/react.eslint.js'),
+  next: () => import('./config/next.eslint.js'),
   vue: () => import('./config/vue.eslint.js'),
+  vite: () => import('./config/vite.eslint.js'),
   vitest: () => import('./config/vitest.eslint.js'),
   jest: () => import('./config/jest.eslint.js'),
   zod: () => import('./config/zod.eslint.js'),
@@ -89,8 +91,10 @@ export interface MocOptions extends NodeConfigOptions {
   node?: boolean;
   nest?: boolean;
   react?: boolean;
+  next?: boolean;
   vue?: boolean;
   vueTs?: boolean;
+  vite?: boolean;
   vitest?: boolean;
   jest?: boolean;
   zod?: boolean;
@@ -151,8 +155,21 @@ export async function moc(options: MocOptions = {}): Promise<Linter.Config[]> {
     configs.push(...createNodeConfig(options));
   }
 
-  // Framework layers on top of the Node base.
-  if (enabled('react', detected.stacks)) {
+  // Framework layer on top of the Node base. Next supersedes React: a Next
+  // project's React layer is composed *inside* the Next stack
+  // (`createNextConfig` reuses `createReactConfig`), so we apply the React layer
+  // exactly once — never both the Next stack and a standalone React stack. When
+  // `next` is force-disabled, React remains the fallback (a Next project is
+  // still a React project).
+  const isNextEnabled = enabled('next', detected.stacks);
+
+  if (isNextEnabled) {
+    const entryModule = (await importEntry(STACKS.next)) as unknown as {
+      createNextConfig: (options?: { rootDir?: string }) => Linter.Config[];
+    };
+
+    configs.push(...entryModule.createNextConfig(options));
+  } else if (enabled('react', detected.stacks)) {
     const entryModule = (await importEntry(STACKS.react)) as unknown as {
       createReactConfig: (options?: { rootDir?: string }) => Linter.Config[];
     };
@@ -174,7 +191,19 @@ export async function moc(options: MocOptions = {}): Promise<Linter.Config[]> {
   }
 
   // Add-ons loaded in parallel; iteration order stays stable for determinism.
-  const enabledExtras = Object.keys(EXTRAS).filter((key) => enabled(key, detected.extras));
+  const enabledExtras = Object.keys(EXTRAS).filter((key) => {
+    // The Next stack already supplies React Fast Refresh with Next's export
+    // conventions, so the `vite` add-on must NOT also register
+    // `eslint-plugin-react-refresh` — ESLint errors on a duplicate plugin, and
+    // the vite preset would otherwise clobber Next's `allowExportNames`. Next
+    // owns Fast Refresh when it is active.
+    if (key === 'vite' && isNextEnabled) {
+      return false;
+    }
+
+    return enabled(key, detected.extras);
+  });
+
   const extraModules = await Promise.all(enabledExtras.map((key) => importEntry(EXTRAS[key])));
 
   for (const entryModule of extraModules) {

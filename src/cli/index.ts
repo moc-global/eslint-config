@@ -21,8 +21,8 @@ ${color.bold('Commands')}
   help            Show this help
 
 ${color.bold('init options')}
-  --preset <s>    Base stack: node | nest | react | vue (skips the stack prompt)
-  --extras <a,b>  Comma-separated add-ons: vitest, jest, zod, i18n, tailwind
+  --preset <s>    Base stack: node | nest | react | next | vue (skips the stack prompt)
+  --extras <a,b>  Comma-separated add-ons: vite, vitest, jest, zod, i18n, tailwind
   --vue-ts        For a Vue project, use the TypeScript parser chain for SFCs
   -y, --yes       Non-interactive; use detection (and --preset/--extras if given)
   --no-install    Write config and scripts only; don't install packages
@@ -121,14 +121,14 @@ function parseArguments(argv: string[]): ParseArgumentsReturn {
  */
 function validate(options: CliOptions): string | null {
   if (options.preset && !isStack(options.preset)) {
-    return `Unknown --preset "${options.preset}". Valid: node, nest, react, vue.`;
+    return `Unknown --preset "${options.preset}". Valid: node, nest, react, next, vue.`;
   }
 
   if (options.extras) {
     const bad = options.extras.filter((value) => !isExtra(value));
 
     if (bad.length > 0) {
-      return `Unknown --extras: ${bad.join(', ')}. Valid: vitest, jest, zod, i18n, tailwind.`;
+      return `Unknown --extras: ${bad.join(', ')}. Valid: vite, vitest, jest, zod, i18n, tailwind.`;
     }
   }
 

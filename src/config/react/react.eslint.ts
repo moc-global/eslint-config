@@ -6,7 +6,6 @@ import { defineConfig } from 'eslint/config';
 // eslint-disable-next-line depend/ban-dependencies
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 
 import { eslintLogger } from '../../core/logger.js';
@@ -68,7 +67,11 @@ export function createReactRulesConfig(options: { rootDir?: string } = {}) {
         ecmaVersion: 'latest',
         globals: globals.browser,
       },
-      extends: [reactHooks.configs.flat['recommended-latest'], reactRefresh.configs.vite],
+      // Fast Refresh is intentionally NOT here: it is a bundler/HMR concern, not
+      // a React-stack concern. The `vite` add-on (`@moc-global/eslint-config/vite`)
+      // and the `next` stack each layer the appropriate `eslint-plugin-react-refresh`
+      // preset on top. See add-nextjs-stack (framework-stack-compatibility).
+      extends: [reactHooks.configs.flat['recommended-latest']],
       plugins: { react },
       rules: {
         ...react.configs.recommended.rules,

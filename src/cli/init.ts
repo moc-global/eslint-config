@@ -18,7 +18,7 @@ import {
 import { color, info, step, success, warn } from './ui.js';
 
 /** Base stacks, in the order presented to the user. */
-const BASE_ORDER = ['node', 'nest', 'react', 'vue'];
+const BASE_ORDER = ['node', 'nest', 'react', 'next', 'vue'];
 
 /**
  * Prompts the user to choose a single base stack, pre-selecting the detected one.
@@ -113,7 +113,10 @@ export async function init(options: CliOptions): Promise<number> {
 
   const manager = detectPackageManager(rootDir);
   const detected = detectStacks(rootDir);
-  const detectedBase = preset ?? detected.stacks.find((key) => key !== 'node') ?? 'node';
+
+  // Detection reports both `react` and `next` for a Next project; apply the
+  // `next`-supersedes-`react` precedence here so the wizard pre-selects Next.
+  const detectedBase = preset ?? (detected.stacks.includes('next') ? 'next' : detected.stacks.find((key) => key !== 'node')) ?? 'node';
 
   info(`Package manager: ${color.cyan(manager)}`);
   info(`Detected base:   ${color.cyan(STACKS[detectedBase].label)}`);
