@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for improving `@moc-global/eslint-config`! The full guide — repository
+Thanks for improving `eslint-config-mocg`! The full guide — repository
 layout, dev workflow, how to add a rule / stack / add-on, the testing strategy,
 and the versioning policy — lives in the docs:
 **[docs/guide/contributing.md](./docs/guide/contributing.md)** (or run `npm run docs:dev`).

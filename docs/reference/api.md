@@ -1,13 +1,13 @@
-# API: `moc()` & factories
+# API: `mocg()` & factories
 
-## `moc(options?)`
+## `mocg(options?)`
 
 The umbrella factory. Returns a `Promise` resolving to a flat-config array. Use it as the default export of your `eslint.config.mjs`.
 
 ```js
-import { moc } from '@moc-global/eslint-config';
+import { mocg } from 'eslint-config-mocg';
 
-export default moc(options);
+export default mocg(options);
 ```
 
 ### Options
@@ -36,43 +36,43 @@ All options are optional. Stack/add-on flags are `boolean | undefined` — `true
 ### Examples
 
 ```js
-export default moc();                              // auto-detect everything
-export default moc({ react: true, vitest: true }); // explicit stacks
-export default moc({ tsconfig: 'tsconfig.app.json' });
-export default moc({ vue: true, vueTs: true });    // type-aware Vue SFCs
+export default mocg();                              // auto-detect everything
+export default mocg({ react: true, vitest: true }); // explicit stacks
+export default mocg({ tsconfig: 'tsconfig.app.json' });
+export default mocg({ vue: true, vueTs: true });    // type-aware Vue SFCs
 ```
 
 ## Subpath exports (escape hatches)
 
-Each stack is also exported on its own subpath, importing its optional peers directly. Use these when you want to hand-compose the array instead of letting `moc()` orchestrate.
+Each stack is also exported on its own subpath, importing its optional peers directly. Use these when you want to hand-compose the array instead of letting `mocg()` orchestrate.
 
 | Import | Export(s) |
 |---|---|
-| `@moc-global/eslint-config` | `moc` (default & named), `createNodeConfig`, `detectStacks`, `STACKS`, `EXTRAS` |
-| `@moc-global/eslint-config/node` | `createNodeConfig`, default |
-| `@moc-global/eslint-config/react` | `createReactConfig`, default (pristine — no Fast Refresh) |
-| `@moc-global/eslint-config/next` | `createNextConfig`, default (React + Next) |
-| `@moc-global/eslint-config/react-compiler` | default (opt-in; requires `eslint-plugin-react-compiler`) |
-| `@moc-global/eslint-config/vite` | default (React Fast Refresh; requires `eslint-plugin-react-refresh`) |
-| `@moc-global/eslint-config/vue` | `createVueConfig`, `createVueTsConfig`, default |
-| `@moc-global/eslint-config/nest` | `createNestConfig`, default |
-| `@moc-global/eslint-config/vitest` | default |
-| `@moc-global/eslint-config/jest` | default |
-| `@moc-global/eslint-config/zod` | default |
-| `@moc-global/eslint-config/i18n` | default |
-| `@moc-global/eslint-config/tailwind` | default |
-| `@moc-global/eslint-config/stacks` | `STACKS`, `EXTRAS`, `requiredPlugins`, `PACKAGE_NAME` |
+| `eslint-config-mocg` | `mocg` (default & named), `createNodeConfig`, `detectStacks`, `STACKS`, `EXTRAS` |
+| `eslint-config-mocg/node` | `createNodeConfig`, default |
+| `eslint-config-mocg/react` | `createReactConfig`, default (pristine — no Fast Refresh) |
+| `eslint-config-mocg/next` | `createNextConfig`, default (React + Next) |
+| `eslint-config-mocg/react-compiler` | default (opt-in; requires `eslint-plugin-react-compiler`) |
+| `eslint-config-mocg/vite` | default (React Fast Refresh; requires `eslint-plugin-react-refresh`) |
+| `eslint-config-mocg/vue` | `createVueConfig`, `createVueTsConfig`, default |
+| `eslint-config-mocg/nest` | `createNestConfig`, default |
+| `eslint-config-mocg/vitest` | default |
+| `eslint-config-mocg/jest` | default |
+| `eslint-config-mocg/zod` | default |
+| `eslint-config-mocg/i18n` | default |
+| `eslint-config-mocg/tailwind` | default |
+| `eslint-config-mocg/stacks` | `STACKS`, `EXTRAS`, `requiredPlugins`, `PACKAGE_NAME` |
 
 ::: warning Why framework factories aren't on the root
-The root entry only re-exports `createNodeConfig` (which has no optional peers). Framework factories live on their subpaths so importing the root never forces React/Vue/Nest plugins to resolve. Import `createReactConfig` from `@moc-global/eslint-config/react`, not from the root.
+The root entry only re-exports `createNodeConfig` (which has no optional peers). Framework factories live on their subpaths so importing the root never forces React/Vue/Nest plugins to resolve. Import `createReactConfig` from `eslint-config-mocg/react`, not from the root.
 :::
 
 ### Hand-composing
 
 ```js
 import { defineConfig } from 'eslint/config';
-import { createNodeConfig } from '@moc-global/eslint-config/node';
-import { createReactConfig } from '@moc-global/eslint-config/react';
+import { createNodeConfig } from 'eslint-config-mocg/node';
+import { createReactConfig } from 'eslint-config-mocg/react';
 
 export default defineConfig([
   ...createNodeConfig({ tsconfig: 'tsconfig.json' }),
@@ -82,10 +82,10 @@ export default defineConfig([
 
 ## `detectStacks(rootDir?)`
 
-Returns `{ stacks: string[], extras: string[] }` for a project root, based on its declared dependencies. This is what `moc()` uses internally and what the CLI uses for pre-selection.
+Returns `{ stacks: string[], extras: string[] }` for a project root, based on its declared dependencies. This is what `mocg()` uses internally and what the CLI uses for pre-selection.
 
 ```js
-import { detectStacks } from '@moc-global/eslint-config';
+import { detectStacks } from 'eslint-config-mocg';
 
 detectStacks(process.cwd()); // → { stacks: ['react'], extras: ['vitest'] }
 ```

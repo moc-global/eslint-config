@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `@moc-global/eslint-config` are documented here.
+All notable changes to `eslint-config-mocg` are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 this project adheres to [Semantic Versioning](https://semver.org/). See the
@@ -10,6 +10,26 @@ for what counts as a major, minor, or patch.
 ## [Unreleased]
 
 _Nothing yet._
+
+## [2.2.0]
+
+Renames the package to its canonical company identity. **Breaking** — the package
+name, the umbrella export, and the CLI bin all change, so consumers must update
+their dependency and import lines. Behavior (the rules themselves) is unchanged.
+
+### Changed
+
+- **BREAKING:** the package is now published as **`eslint-config-mocg`** (unscoped),
+  replacing the former scoped `@moc-global/eslint-config`. Update your dependency and
+  every import specifier (`eslint-config-mocg`, `eslint-config-mocg/react`, …).
+- **BREAKING:** the umbrella export is renamed **`moc()` → `mocg()`** (and its options
+  type `MocOptions` → `MocgOptions`). Update to `import { mocg } from 'eslint-config-mocg'`
+  and `export default mocg()`. Subpath exports and the `create*Config` factories keep
+  their names.
+- **BREAKING:** the CLI bin is renamed `moc-eslint` → **`eslint-config-mocg`**
+  (`npx eslint-config-mocg init`).
+
+The repository, homepage, and issue URLs are unchanged.
 
 ## [2.1.0]
 
@@ -90,6 +110,7 @@ distribution model, layout, and minimum tooling versions all changed.
   the false-positive-prone `detect-object-injection`; and relaxes
   `max-classes-per-file`.
 
-[Unreleased]: https://github.com/dmytro-vakulenko-moc/eslint-config/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/dmytro-vakulenko-moc/eslint-config/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/dmytro-vakulenko-moc/eslint-config/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/dmytro-vakulenko-moc/eslint-config/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/dmytro-vakulenko-moc/eslint-config/releases/tag/v2.0.0

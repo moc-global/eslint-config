@@ -2,12 +2,12 @@
 layout: home
 
 hero:
-  name: "@moc-global/eslint-config"
+  name: "eslint-config-mocg"
   text: "One ESLint config for every project"
   tagline: A strict, batteries-included flat config for Node.js, NestJS, React, and Vue — installed with one command, governed in one place.
   image:
     src: /logo.svg
-    alt: "@moc-global/eslint-config"
+    alt: "eslint-config-mocg"
   actions:
     - theme: brand
       text: Get started
@@ -25,13 +25,13 @@ features:
     details: Core plugins ship bundled and version-locked. Framework plugins (React, Vue, NestJS) load on demand. Pick your stack, get a tuned config.
   - icon: ⚡
     title: One-command install
-    details: "npx @moc-global/eslint-config init detects your framework and package manager, installs what you need, and writes the config file."
+    details: "npx eslint-config-mocg init detects your framework and package manager, installs what you need, and writes the config file."
   - icon: 🔒
     title: Governed centrally
     details: Bump a plugin and tune a rule once. Every project gets the tested combination on its next update — no per-project drift.
   - icon: 🧩
     title: Auto-detecting
-    details: "moc() reads your dependencies and enables the right stacks automatically. Zero config for most projects; explicit flags when you want them."
+    details: "mocg() reads your dependencies and enables the right stacks automatically. Zero config for most projects; explicit flags when you want them."
   - icon: 🪜
     title: Adopts into legacy code
     details: Baseline existing violations with ESLint's bulk suppressions so CI is green on day one, then ratchet down at your own pace.
@@ -44,14 +44,14 @@ features:
 
 ```bash
 # In any project:
-npx @moc-global/eslint-config init
+npx eslint-config-mocg init
 ```
 
 ```js
 // eslint.config.mjs — the whole file
-import { moc } from '@moc-global/eslint-config';
+import { mocg } from 'eslint-config-mocg';
 
-export default moc();
+export default mocg();
 ```
 
-That's it. `moc()` detects your stack and composes the right rules. See [Getting started](/guide/getting-started) for manual setup, presets, and CI usage.
+That's it. `mocg()` detects your stack and composes the right rules. See [Getting started](/guide/getting-started) for manual setup, presets, and CI usage.

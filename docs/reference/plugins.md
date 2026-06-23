@@ -1,6 +1,6 @@
 # Plugins reference
 
-`@moc-global/eslint-config` is strict by design. It does not assemble a handful of "recommended" presets and call it a day — it layers a couple of dozen plugins, each chosen to catch a specific class of mistake before it reaches review or production. This page is the map: for every plugin we ship, what category of problems it catches and what it actually ensures for the team — not just its name.
+`eslint-config-mocg` is strict by design. It does not assemble a handful of "recommended" presets and call it a day — it layers a couple of dozen plugins, each chosen to catch a specific class of mistake before it reaches review or production. This page is the map: for every plugin we ship, what category of problems it catches and what it actually ensures for the team — not just its name.
 
 Plugins fall into three groups. **Core plugins** are bundled as regular `dependencies` and are always active in the base Node/TypeScript config. **Framework plugins** and **add-on plugins** are optional `peerDependencies` — you install them only for the stacks you use, and they activate automatically when detected.
 
@@ -136,7 +136,7 @@ Fast Refresh safety. It flags exports that would break hot module replacement (f
 
 #### `eslint-plugin-react-compiler` (opt-in — not part of the React stack)
 
-React Compiler validation. Unlike the three plugins above, this is **not** activated by the React stack and is **not** auto-installed: it is an optional peer that `moc()` never loads. Enable it explicitly via the `@moc-global/eslint-config/react-compiler` export (see [Stacks → React Compiler](/guide/stacks#react-compiler-opt-in)) only when your project runs the React 19 compiler. When enabled, `react-compiler/react-compiler` ensures components follow the rules the compiler depends on for safe auto-memoization, surfacing code the compiler would otherwise bail out on.
+React Compiler validation. Unlike the three plugins above, this is **not** activated by the React stack and is **not** auto-installed: it is an optional peer that `mocg()` never loads. Enable it explicitly via the `eslint-config-mocg/react-compiler` export (see [Stacks → React Compiler](/guide/stacks#react-compiler-opt-in)) only when your project runs the React 19 compiler. When enabled, `react-compiler/react-compiler` ensures components follow the rules the compiler depends on for safe auto-memoization, surfacing code the compiler would otherwise bail out on.
 
 ### Next.js
 

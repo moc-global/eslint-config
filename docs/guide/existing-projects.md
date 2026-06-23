@@ -24,7 +24,7 @@ ESLint has a built-in mechanism for exactly this — **bulk suppressions** (ESLi
 1. **Install and configure** the way any project would:
 
    ```bash
-   npx @moc-global/eslint-config init
+   npx eslint-config-mocg init
    ```
 
 2. **Create the baseline.** This writes `eslint-suppressions.json` capturing every current violation:
@@ -79,15 +79,15 @@ uses `@next/eslint-plugin-next` directly and brings the React layer itself.
 2. Install and initialize (the wizard detects `next` and offers the Next stack):
 
    ```bash
-   npx @moc-global/eslint-config init
+   npx eslint-config-mocg init
    ```
 
 3. Your `eslint.config.mjs` becomes a single zero-config call — Next is auto-detected:
 
    ```js
-   import { moc } from '@moc-global/eslint-config';
+   import { mocg } from 'eslint-config-mocg';
 
-   export default moc();
+   export default mocg();
    ```
 
 The Next stack already covers what `eslint-config-next` gave you (the
@@ -97,12 +97,12 @@ are ignored for you.
 
 ## What about per-rule relaxation?
 
-If a particular rule genuinely doesn't fit a project, relax it locally and visibly in that project's `eslint.config.mjs` — append a config block after `moc()`:
+If a particular rule genuinely doesn't fit a project, relax it locally and visibly in that project's `eslint.config.mjs` — append a config block after `mocg()`:
 
 ```js
-import { moc } from '@moc-global/eslint-config';
+import { mocg } from 'eslint-config-mocg';
 
-const config = await moc();
+const config = await mocg();
 
 export default [
   ...config,

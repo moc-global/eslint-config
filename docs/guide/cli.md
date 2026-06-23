@@ -1,18 +1,18 @@
 # The installer CLI
 
-The package ships a CLI exposed as `@moc-global/eslint-config` (and the `moc-eslint` bin). It has two commands: `init` and `doctor`.
+The package ships a CLI exposed as `eslint-config-mocg` (and the `eslint-config-mocg` bin). It has two commands: `init` and `doctor`.
 
 ## `init`
 
 ```bash
-npx @moc-global/eslint-config init [options]
+npx eslint-config-mocg init [options]
 ```
 
 What it does, in order:
 
 1. **Detects** your package manager (npm / yarn / pnpm / bun, from the lockfile or the `packageManager` field) and your framework (from `package.json` dependencies).
 2. **Asks** which base stack you're on — pre-selecting the detected one — and which add-ons to enable. (Skipped with `--yes`.)
-3. **Installs** `@moc-global/eslint-config` plus the optional peer plugins your selection needs, using your package manager.
+3. **Installs** `eslint-config-mocg` plus the optional peer plugins your selection needs, using your package manager.
 4. **Writes** `eslint.config.mjs` (it will not overwrite an existing one — it prints the suggested contents instead).
 5. **Patches** `package.json` with `lint` and `lint:fix` scripts if they're missing.
 
@@ -31,19 +31,19 @@ What it does, in order:
 
 ```bash
 # Interactive, auto-detected:
-npx @moc-global/eslint-config init
+npx eslint-config-mocg init
 
 # Pin the stack, non-interactive (great for CI or templates):
-npx @moc-global/eslint-config init --preset nest --extras vitest --yes
+npx eslint-config-mocg init --preset nest --extras vitest --yes
 
 # See what it would do, without touching anything:
-npx @moc-global/eslint-config init --preset react --dry-run
+npx eslint-config-mocg init --preset react --dry-run
 ```
 
 ## `doctor`
 
 ```bash
-npx @moc-global/eslint-config doctor
+npx eslint-config-mocg doctor
 ```
 
 Detects your stack, then checks that every plugin it requires is actually installed and resolvable from your project. It reports versions for what's present and an install command for whatever's missing. Use it when lint behaves differently than expected — it answers "do I have the right plugins?" without a back-and-forth.
@@ -65,5 +65,5 @@ Detected extras: vitest
 ## `help`
 
 ```bash
-npx @moc-global/eslint-config help
+npx eslint-config-mocg help
 ```

@@ -1,6 +1,6 @@
 # Stacks & add-ons
 
-A **stack** is your primary framework. An **add-on** layers extra rules onto any stack. You select one base stack and any number of add-ons — the installer and `moc()` both speak this vocabulary.
+A **stack** is your primary framework. An **add-on** layers extra rules onto any stack. You select one base stack and any number of add-ons — the installer and `mocg()` both speak this vocabulary.
 
 ## Base stacks
 
@@ -28,10 +28,10 @@ on top — applying its `core-web-vitals` rule set (which already includes
 `-react-hooks`, and `typescript-eslint` and clash with this package's tuning.
 
 ```js
-import { moc } from '@moc-global/eslint-config';
+import { mocg } from 'eslint-config-mocg';
 
 // Zero-config — `next` is auto-detected and supersedes the React stack.
-export default moc();
+export default mocg();
 ```
 
 The stack supports **both routers**: it allows the non-component exports that the
@@ -42,7 +42,7 @@ Pages Router (`getStaticProps`, `getServerSideProps`, …) legitimately export, 
 ignores Next build artifacts (`.next/`, `out/`, `next-env.d.ts`).
 
 The **React Compiler** rules are reused as-is for Next — there is no separate
-`next-compiler`. Opt in via the `@moc-global/eslint-config/react-compiler` export
+`next-compiler`. Opt in via the `eslint-config-mocg/react-compiler` export
 (see below).
 
 ### React Compiler (opt-in)
@@ -52,10 +52,10 @@ The React stack does **not** enable the React Compiler rules by default, and
 Enable it explicitly only if you run the React Compiler:
 
 ```js
-import { moc } from '@moc-global/eslint-config';
-import reactCompiler from '@moc-global/eslint-config/react-compiler';
+import { mocg } from 'eslint-config-mocg';
+import reactCompiler from 'eslint-config-mocg/react-compiler';
 
-const config = await moc();
+const config = await mocg();
 
 export default [...config, ...reactCompiler];
 ```
@@ -69,7 +69,7 @@ npm i -D eslint-plugin-react-compiler
 Vue single-file components can be parsed for plain JS or type-aware TS. Opt into the TypeScript parser chain with `vueTs`:
 
 ```js
-moc({ vue: true, vueTs: true });
+mocg({ vue: true, vueTs: true });
 ```
 
 Remember to include `*.vue` in your `tsconfig.json` and ESLint file globs, and
@@ -96,18 +96,18 @@ Bundled add-ons require no extra install — their plugins ship as dependencies 
 Fast Refresh is a bundler/HMR concern, so the React stack itself is **pristine** —
 it no longer bakes in the Vite preset. Instead, the `vite` add-on supplies
 `react-refresh`'s `vite` preset (`allowConstantExport`) and is **auto-enabled**
-whenever a project depends on `vite`. So a `moc()` Vite + React project keeps Fast
+whenever a project depends on `vite`. So a `mocg()` Vite + React project keeps Fast
 Refresh linting with no change. The only consumers that need to act are those who
-import the `@moc-global/eslint-config/react` subpath **directly** (not via `moc()`):
-add `@moc-global/eslint-config/vite` alongside it.
+import the `eslint-config-mocg/react` subpath **directly** (not via `mocg()`):
+add `eslint-config-mocg/vite` alongside it.
 
 ## Putting it together
 
 ```js
-import { moc } from '@moc-global/eslint-config';
+import { mocg } from 'eslint-config-mocg';
 
 // A NestJS service tested with Vitest, using Zod schemas:
-export default moc({
+export default mocg({
   nest: true,
   vitest: true,
   zod: true,
@@ -116,7 +116,7 @@ export default moc({
 
 ```js
 // A React app with Tailwind and i18n — everything auto-detected:
-export default moc();
+export default mocg();
 ```
 
 Each flag may be `true` (force on), `false` (force off), or omitted (auto-detect). See [How it works](/guide/how-it-works#auto-detection).

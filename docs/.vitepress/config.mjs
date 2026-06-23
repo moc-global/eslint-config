@@ -20,7 +20,7 @@ function resolveBase() {
 
 export default defineConfig({
   base: resolveBase(),
-  title: '@moc-global/eslint-config',
+  title: 'eslint-config-mocg',
   description: 'The shared, company-wide ESLint flat config for Node.js, NestJS, React, and Vue — with a one-command installer.',
   lang: 'en-US',
   cleanUrls: true,
@@ -57,7 +57,7 @@ export default defineConfig({
         text: 'Reference',
         items: [
           { text: 'Rules & plugins', link: '/reference/plugins' },
-          { text: 'API: moc() & factories', link: '/reference/api' },
+          { text: 'API: mocg() & factories', link: '/reference/api' },
         ],
       },
       {

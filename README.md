@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="docs/public/logo.svg" alt="@moc-global/eslint-config" width="140">
+  <img src="docs/public/logo.svg" alt="eslint-config-mocg" width="140">
 </p>
 
-# @moc-global/eslint-config
+# eslint-config-mocg
 
 > The shared, company-wide ESLint flat config for Node.js, NestJS, React, Next.js, and Vue — with a one-command installer.
 
@@ -11,20 +11,20 @@ A single, versioned package that encodes one strict standard for our TypeScript 
 ## Quick start
 
 ```bash
-npx @moc-global/eslint-config init
+npx eslint-config-mocg init
 ```
 
 This detects your framework and package manager, installs what you need, writes `eslint.config.mjs`, and adds lint scripts. Or do it manually:
 
 ```bash
-npm i -D @moc-global/eslint-config eslint
+npm i -D eslint-config-mocg eslint
 ```
 
 ```js
 // eslint.config.mjs
-import { moc } from '@moc-global/eslint-config';
+import { mocg } from 'eslint-config-mocg';
 
-export default moc(); // auto-detects your stack
+export default mocg(); // auto-detects your stack
 ```
 
 ```bash
@@ -40,8 +40,8 @@ npm run lint
 ## Examples
 
 Five runnable example consumers live in [`examples/`](./examples) — each installs the
-packed tarball and lints with a bare `export default moc()` (Vue opts into type-aware
-SFCs with `moc({ vueTs: true })`):
+packed tarball and lints with a bare `export default mocg()` (Vue opts into type-aware
+SFCs with `mocg({ vueTs: true })`):
 
 | Example | Stack |
 | --- | --- |
@@ -64,12 +64,12 @@ authored in TypeScript and **builds itself on install** via the `prepare` script
 
 ```jsonc
 // git dependency — `prepare` compiles dist/ on install
-"@moc-global/eslint-config": "git+ssh://git@github.com/dmytro-vakulenko-moc/eslint-config.git#semver:^2"
+"eslint-config-mocg": "git+ssh://git@github.com/dmytro-vakulenko-moc/eslint-config.git#semver:^2"
 ```
 
 ```bash
 # or a packed tarball (the tarball ships the prebuilt dist/)
-npm run build && npm pack && npm i -D ./moc-global-eslint-config-2.1.0.tgz
+npm run build && npm pack && npm i -D ./eslint-config-mocg-2.2.0.tgz
 ```
 
 Once published, the registry tarball ships the prebuilt `dist/` (with `.d.ts`), so consumers need no build step.
@@ -79,7 +79,7 @@ Once published, the registry tarball ships the prebuilt `dist/` (with `.d.ts`), 
 Don't fix everything at once. Baseline existing violations and ratchet down:
 
 ```bash
-npx @moc-global/eslint-config init
+npx eslint-config-mocg init
 npx eslint --suppress-all      # CI green today; only new violations fail
 ```
 
@@ -115,7 +115,7 @@ npm run docs:dev
 ```
 
 All checks run **locally** via a **husky `pre-push` hook** before every push:
-`lint` + `typecheck` + `test:run` (whose dogfood tests compose `moc()` for each stack and
+`lint` + `typecheck` + `test:run` (whose dogfood tests compose `mocg()` for each stack and
 lint a fixture) + `docs:build` + `pack:check` + `verify:examples`. The checks workflow
 (`.github/workflows/ci.yml`) is kept on hand but **disabled** for now (manual-only); the
 docs deploy (`.github/workflows/docs.yml`) is the one active workflow. Use
