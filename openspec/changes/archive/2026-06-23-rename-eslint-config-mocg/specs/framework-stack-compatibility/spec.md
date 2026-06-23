@@ -1,8 +1,5 @@
-# framework-stack-compatibility Specification
+## MODIFIED Requirements
 
-## Purpose
-Guarantee that framework stacks composed by `mocg()` (React, NestJS, and Vue) load and run in a fresh consumer install without crashing ESLint, resolve framework versions without removed ESLint APIs, scope rules to the stack's actual runtime and file types (no spurious errors on a standard project layout), keep required peers consistent with the plugins the stack loads, and are exercised by the repository's own checks so regressions surface before shipping.
-## Requirements
 ### Requirement: Framework stacks load without crashing in a clean consumer install
 
 A framework stack composed by `mocg()` (React first) SHALL load and execute under
@@ -20,34 +17,6 @@ consumers.
 
 - **WHEN** the React stack and its required peers are installed fresh
 - **THEN** no transitive dependency resolves to a version missing a subpath export that another plugin imports (e.g. `zod-validation-error/v4`)
-
-### Requirement: Framework version is resolved without removed ESLint APIs
-
-The React configuration SHALL provide `settings.react.version` as a concrete
-version resolved from the consumer's installed `react`, and SHALL NOT use
-`'detect'`, whose detector calls `context.getFilename()` — an API removed in the
-supported ESLint range.
-
-#### Scenario: React version comes from the installed package
-
-- **WHEN** the React config is composed for a project with `react` installed
-- **THEN** `settings.react.version` equals the installed React version and no version-detection code path runs
-
-#### Scenario: Rule loading does not call removed context APIs
-
-- **WHEN** a React rule that needs the React version (e.g. `react/display-name`) loads
-- **THEN** it does not throw `getFilename is not a function`
-
-### Requirement: Environment-specific rules match the stack's runtime
-
-When the React stack is active, rules that assume a Node.js runtime SHALL NOT be
-applied to browser-targeted source. In particular, Node-builtin availability
-checks SHALL NOT flag standard browser globals.
-
-#### Scenario: Browser API is not flagged as an unsupported Node builtin
-
-- **WHEN** React source uses a browser global such as `localStorage`
-- **THEN** `n/no-unsupported-features/node-builtins` does not report it
 
 ### Requirement: Required peers match the plugins the stack loads
 
@@ -139,4 +108,3 @@ Refresh from `mocg()` Vite consumers fails the suite rather than shipping silent
 
 - **WHEN** the test suite composes `mocg()` for a fixture that depends on `vite` and `react`
 - **THEN** the resolved config includes the Vite Fast Refresh add-on
-

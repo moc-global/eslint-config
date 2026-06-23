@@ -1,15 +1,4 @@
-# nextjs-stack Specification
-
-## Purpose
-Provide a first-class Next.js stack, composed as React plus the official
-`@next/eslint-plugin-next` rules, so a Next.js project lints cleanly out of the box
-via `mocg()`: the plugin's Core Web Vitals rule set, Next-aware Fast Refresh export
-conventions for both the App and Pages Routers, relaxed documentation rules for
-Route Handlers and middleware, and ignored Next build artifacts. The stack is
-detected as superseding React (the React layer is applied exactly once, with React
-as the fallback when Next is disabled) and is exercised by the repository's own
-checks and a runnable example consumer.
-## Requirements
+## MODIFIED Requirements
 ### Requirement: Next.js stack is composed as React plus Next rules
 
 `mocg()` SHALL provide a Next.js framework stack whose configuration is the React
@@ -28,57 +17,6 @@ importing `eslint-config-mocg/next` alone yields full React + Next coverage.
 
 - **WHEN** a consumer imports `createNextConfig` from `eslint-config-mocg/next` and uses it without separately adding the React config
 - **THEN** the resulting config lints `.tsx` React/Next source with both React and Next rules
-
-### Requirement: Next rules come from the official plugin, not the meta-config
-
-The Next stack SHALL load `@next/eslint-plugin-next` directly and SHALL NOT consume
-`eslint-config-next`, because the meta-config re-bundles its own
-`eslint-plugin-react`, `eslint-plugin-react-hooks`, and `typescript-eslint` that
-would duplicate-register against this package's own plugins and conflict with its
-tuning. The stack SHALL apply the plugin's `core-web-vitals` configuration, which
-already contains every `recommended` rule plus the Core Web Vitals warn→error
-upgrades.
-
-#### Scenario: Core Web Vitals rules are active
-
-- **WHEN** Next source uses an `<a>` tag to navigate between internal pages or a synchronous `<script>`
-- **THEN** `@next/next/no-html-link-for-pages` and `@next/next/no-sync-scripts` report as errors
-
-#### Scenario: No duplicate React plugin registration
-
-- **WHEN** the Next stack is composed
-- **THEN** ESLint loads without a duplicate-plugin error and `eslint-config-next` is not a dependency of the resolved config
-
-### Requirement: Next-aware Fast Refresh export conventions
-
-When the Next stack is active, `react-refresh/only-export-components` SHALL allow
-the non-component exports that Next legitimately requires, covering both the App
-Router (e.g. `metadata`, `generateMetadata`, `generateStaticParams`, `dynamic`,
-`revalidate`, `viewport`) and the Pages Router (`getStaticProps`,
-`getServerSideProps`, `getStaticPaths`, `getInitialProps`, `config`,
-`reportWebVitals`).
-
-#### Scenario: App Router metadata export is not flagged
-
-- **WHEN** an App Router `page.tsx` exports a `metadata` object alongside the default page component
-- **THEN** `react-refresh/only-export-components` does not report the `metadata` export
-
-#### Scenario: Pages Router data-fetching export is not flagged
-
-- **WHEN** a Pages Router page exports `getServerSideProps` alongside the default component
-- **THEN** `react-refresh/only-export-components` does not report the `getServerSideProps` export
-
-### Requirement: Next build artifacts are ignored
-
-The Next stack SHALL ignore Next.js build artifacts and generated files so they are
-never linted: `.next/`, `out/`, and `next-env.d.ts`. (Next.js 16 removed
-`next lint`, so the config — consumed by the ESLint CLI — owns these ignores
-itself.)
-
-#### Scenario: Generated next-env.d.ts is not linted
-
-- **WHEN** `eslint .` runs in a Next project containing `next-env.d.ts` and a `.next/` directory
-- **THEN** neither `next-env.d.ts` nor any file under `.next/` is linted
 
 ### Requirement: Next supersedes React and is applied exactly once
 
@@ -127,4 +65,3 @@ and lint clean under the examples verification harness.
 
 - **WHEN** the examples verification harness installs the packed tarball into `examples/next-app` and runs its `lint` and `typecheck` scripts
 - **THEN** both complete with zero errors
-

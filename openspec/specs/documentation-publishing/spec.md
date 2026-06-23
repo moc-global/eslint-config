@@ -2,7 +2,6 @@
 
 ## Purpose
 Ensure the VitePress documentation site is publishable to GitHub Pages and stays correct and maintainable: it builds with a Pages-correct base path, deploys via CI, renders a changelog single-sourced from the root `CHANGELOG.md`, is guarded by a local build check, and carries repository metadata/links that point at the canonical repository.
-
 ## Requirements
 ### Requirement: The documentation site builds with a GitHub-Pages-correct base path
 
@@ -68,4 +67,5 @@ package **name** is independent of the repository location and is not changed by
 #### Scenario: Metadata reflects the canonical repo
 
 - **WHEN** repository URLs are inspected
-- **THEN** they reference `dmytro-vakulenko-moc/eslint-config`, while the package name remains `@moc-global/eslint-config`
+- **THEN** they reference `dmytro-vakulenko-moc/eslint-config`, while the package name remains `eslint-config-mocg`
+
