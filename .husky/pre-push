@@ -2,7 +2,7 @@
 #
 #   lint           the config lints its own TypeScript source
 #   typecheck      tsc --noEmit
-#   test:run       vitest, incl. the React/Nest/Vue dogfood tests (compose moc()
+#   test:run       vitest, incl. the React/Nest/Vue dogfood tests (compose mocg()
 #                  + lint a fixture) — catches failing rules or plugins
 #   docs:build     VitePress build — catches dead links before they reach the
 #                  Pages deploy (GitHub CI is disabled, so this is the gate)

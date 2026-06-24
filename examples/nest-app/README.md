@@ -1,7 +1,7 @@
 # nest-app-example
 
 A small NestJS + TypeScript service that consumes
-[`@moc-global/eslint-config`](../../README.md): decorators, dependency
+[`eslint-config-mocg`](../../README.md): decorators, dependency
 injection, class-validator DTOs, a `@/*` path alias, and centralized
 configuration — all under type-aware linting.
 
@@ -30,7 +30,7 @@ The NestJS stack replaces the Node base internally and layers on
 `@darraghor/eslint-plugin-nestjs-typed`. See `eslint.config.mjs`:
 
 ```js
-import { moc } from '@moc-global/eslint-config';
+import { mocg } from 'eslint-config-mocg';
 
-export default moc(); // detects NestJS from @nestjs/core; reads the @/* alias
+export default mocg(); // detects NestJS from @nestjs/core; reads the @/* alias
 ```

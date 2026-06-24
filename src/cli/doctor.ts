@@ -2,7 +2,7 @@ import * as fs from 'node:fs';
 import { createRequire } from 'node:module';
 
 import { detectStacks, installedDependencies } from '../core/detect.js';
-import { requiredPlugins } from '../core/manifest.js';
+import { PACKAGE_NAME, requiredPlugins } from '../core/manifest.js';
 
 import type { CliOptions } from './options.js';
 import { color, info, step, success, warn } from './ui.js';
@@ -97,7 +97,9 @@ export function doctor(options: CliOptions): number {
 
   warn(`${String(missing.length)} package(s) missing. Install them:`);
   info(`  npm i -D ${missing.join(' ')}`);
-  info(`  ${color.dim('or re-run: npx @moc-global/eslint-config init')}`);
+  const reRun = color.dim(`or re-run: npx ${PACKAGE_NAME} init`);
+
+  info(`  ${reRun}`);
 
   return 1;
 }

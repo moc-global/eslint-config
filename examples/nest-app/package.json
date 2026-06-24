@@ -2,7 +2,7 @@
   "name": "nest-app-example",
   "version": "1.0.0",
   "private": true,
-  "description": "Example NestJS + TypeScript project consuming @moc-global/eslint-config",
+  "description": "Example NestJS + TypeScript project consuming eslint-config-mocg",
   "engines": {
     "node": "^22.21.0 || >=24.10.0"
   },
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@darraghor/eslint-plugin-nestjs-typed": "^7.1.31",
-    "@moc-global/eslint-config": "file:../../moc-global-eslint-config-2.1.0.tgz",
+    "eslint-config-mocg": "file:../../eslint-config-mocg-2.2.0.tgz",
     "@types/node": "^22.10.0",
     "eslint": "^10.2.1",
     "typescript": "^5.7.0"

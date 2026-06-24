@@ -15,11 +15,11 @@ describe('installCommand', () => {
 });
 
 describe('generateConfigFile', () => {
-  it('emits a bare moc() call for the node base with no extras', () => {
+  it('emits a bare mocg() call for the node base with no extras', () => {
     const file = generateConfigFile({ base: 'node', extras: [] });
 
-    expect(file).toContain("import { moc } from '@moc-global/eslint-config'");
-    expect(file).toContain('export default moc();');
+    expect(file).toContain("import { mocg } from 'eslint-config-mocg'");
+    expect(file).toContain('export default mocg();');
   });
 
   it('emits explicit flags for a framework base and extras', () => {

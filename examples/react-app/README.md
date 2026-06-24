@@ -1,7 +1,7 @@
 # react-app-example
 
 A small React + TypeScript task board that consumes
-[`@moc-global/eslint-config`](../../README.md) to demonstrate a real-world
+[`eslint-config-mocg`](../../README.md) to demonstrate a real-world
 front-end setup: the `@/*` path alias, components, hooks, and the React JSX
 runtime under type-aware linting.
 
@@ -28,7 +28,7 @@ npm run typecheck
 The ESLint setup is the whole point — see `eslint.config.mjs`:
 
 ```js
-import { moc } from '@moc-global/eslint-config';
+import { mocg } from 'eslint-config-mocg';
 
-export default moc(); // detects React from dependencies; reads the @/* alias
+export default mocg(); // detects React from dependencies; reads the @/* alias
 ```

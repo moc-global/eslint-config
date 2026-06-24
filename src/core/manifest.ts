@@ -32,7 +32,7 @@ function range(name: string): string {
 export interface StackDefinition {
   /** Human-readable name shown in the wizard. */
   label: string;
-  /** Subpath export (e.g. 'react' → '@moc-global/eslint-config/react'). */
+  /** Subpath export (e.g. 'react' → 'eslint-config-mocg/react'). */
   entry: string;
   /** Named factory exported for advanced composition. */
   factory: string;
@@ -88,7 +88,7 @@ export const STACKS: Record<string, StackDefinition> = {
       // keeps required peers matched to what the stack actually loads.
       // See add-nextjs-stack (framework-stack-compatibility).
       //
-      // `eslint-plugin-react-compiler` is intentionally absent here: `moc()`
+      // `eslint-plugin-react-compiler` is intentionally absent here: `mocg()`
       // never loads it (it is opt-in via the `/react-compiler` export), so it is
       // only an *optional* peer, not part of the auto-installed React stack.
       // Auto-installing it pulled react-compiler@rc, which pins
@@ -135,7 +135,7 @@ export const EXTRAS: Record<string, ExtraDefinition> = {
     factory: 'default',
     detect: ['vite'],
     // Not bundled: `eslint-plugin-react-refresh` is an (optional) peer, supplied
-    // here so a `moc()` Vite + React project keeps Fast Refresh linting after it
+    // here so a `mocg()` Vite + React project keeps Fast Refresh linting after it
     // moved out of the pristine React stack.
     plugins: { 'eslint-plugin-react-refresh': range('eslint-plugin-react-refresh') },
   },

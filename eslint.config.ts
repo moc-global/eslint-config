@@ -1,12 +1,12 @@
 import type { ESLint, Linter } from 'eslint';
 import boundaries from 'eslint-plugin-boundaries';
 
-import { moc } from './src/index.js';
+import { mocg } from './src/index.js';
 
 // Dogfood: this package lints its own TypeScript source with its own config.
 // ESLint's jiti loader imports the .ts source directly — no build-before-lint.
 // Type-aware linting is driven by tsconfig.json.
-const config = await moc({ tsconfig: 'tsconfig.json' });
+const config = await mocg({ tsconfig: 'tsconfig.json' });
 
 const repoConfig: Linter.Config[] = [
   {

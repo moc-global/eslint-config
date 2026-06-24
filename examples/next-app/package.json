@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Example Next.js + TypeScript project consuming @moc-global/eslint-config",
+  "description": "Example Next.js + TypeScript project consuming eslint-config-mocg",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -15,7 +15,7 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "@moc-global/eslint-config": "file:../../moc-global-eslint-config-2.1.0.tgz",
+    "eslint-config-mocg": "file:../../eslint-config-mocg-2.2.0.tgz",
     "@next/eslint-plugin-next": "^16.2.9",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",

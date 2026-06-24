@@ -54,10 +54,10 @@ export interface NodeConfigOptions {
  * @returns The composed Node.js flat-config array.
  * @example
  * // Auto-discovery (uses tsconfig.json by default)
- * import { createNodeConfig } from '@moc-global/eslint-config/node';
+ * import { createNodeConfig } from 'eslint-config-mocg/node';
  * @example
  * // Explicit tsconfig
- * import { createNodeConfig } from '@moc-global/eslint-config/node';
+ * import { createNodeConfig } from 'eslint-config-mocg/node';
  * export default createNodeConfig({ tsconfig: 'tsconfig.main.json' });
  */
 export function createNodeConfig(options: NodeConfigOptions = {}): Linter.Config[] {

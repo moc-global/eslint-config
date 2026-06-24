@@ -1,7 +1,7 @@
 # vue-app-example
 
 A small Vue 3 + TypeScript task board that consumes
-[`@moc-global/eslint-config`](../../README.md): `<script setup lang="ts">`
+[`eslint-config-mocg`](../../README.md): `<script setup lang="ts">`
 single-file components, composables, a `@/*` path alias, and **type-aware**
 linting of `.vue` files.
 
@@ -29,7 +29,7 @@ The Vue stack needs the `vueTs` flag for type-aware SFC linting — see
 `eslint.config.mjs`:
 
 ```js
-import { moc } from '@moc-global/eslint-config';
+import { mocg } from 'eslint-config-mocg';
 
-export default moc({ vueTs: true }); // type-aware <script lang="ts"> linting
+export default mocg({ vueTs: true }); // type-aware <script lang="ts"> linting
 ```

@@ -13,7 +13,7 @@ set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$root"
 
-echo "▸ Building and packing @moc-global/eslint-config…"
+echo "▸ Building and packing eslint-config-mocg…"
 npm run build
 npm pack >/dev/null
 

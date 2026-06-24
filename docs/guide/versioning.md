@@ -16,7 +16,7 @@ The important consequence: **a new rule is a minor bump, not a major one.** Proj
 ```json
 {
   "devDependencies": {
-    "@moc-global/eslint-config": "^2.0.0"
+    "eslint-config-mocg": "^2.2.0"
   }
 }
 ```
@@ -24,19 +24,30 @@ The important consequence: **a new rule is a minor bump, not a major one.** Proj
 ## 2.0 — TypeScript & build-based distribution
 
 `2.0` ports the package to TypeScript and ships a compiled `dist/` (with `.d.ts`).
-The **public API is unchanged** — `moc()` and every subpath import keep their names —
-but **how you install changes**, which is why it's a major bump:
+The public API was unchanged at `2.0`, but **how you install changes**, which is why
+it's a major bump:
 
 - Prefer the published registry package (prebuilt, no install-time build).
 - `git+ssh` installs keep working: the `prepare` script compiles `dist/` on install.
-- The package now ships consumer-facing types — `moc(options)` is fully typed.
+- The package now ships consumer-facing types — `mocg(options)` is fully typed.
 
-No code changes are required in your `eslint.config.mjs`.
+## 2.2.0 — package & umbrella rename
+
+`2.2.0` renames the package to `eslint-config-mocg` and the umbrella export to
+`mocg()`. The subpath import names are unchanged (`/node`, `/react`, `/next`, …).
+Update your `eslint.config.mjs` to import `mocg` from `eslint-config-mocg` and call
+`mocg()` in place of the old `moc()`.
+
+Renaming the package and the umbrella export is normally a **major** change under
+the policy above. It ships as a minor `2.2.0` only because this package had never
+been published to npm under any name — there is no released version and no live
+consumer to break, so `2.2.0` is the **first** npm release rather than a `3.0.0`
+break of an existing one.
 
 ## Upgrading a project
 
 ```bash
-npm update @moc-global/eslint-config
+npm update eslint-config-mocg
 npm run lint
 ```
 

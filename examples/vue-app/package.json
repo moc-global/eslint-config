@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Example Vue 3 + TypeScript project consuming @moc-global/eslint-config",
+  "description": "Example Vue 3 + TypeScript project consuming eslint-config-mocg",
   "engines": {
     "node": "^22.21.0 || >=24.10.0"
   },
@@ -16,7 +16,7 @@
     "vue": "^3.5.13"
   },
   "devDependencies": {
-    "@moc-global/eslint-config": "file:../../moc-global-eslint-config-2.1.0.tgz",
+    "eslint-config-mocg": "file:../../eslint-config-mocg-2.2.0.tgz",
     "eslint": "^10.2.1",
     "eslint-plugin-vue": "^10.9.2",
     "typescript": "^5.7.0",

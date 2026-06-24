@@ -68,7 +68,7 @@ export function createReactRulesConfig(options: { rootDir?: string } = {}) {
         globals: globals.browser,
       },
       // Fast Refresh is intentionally NOT here: it is a bundler/HMR concern, not
-      // a React-stack concern. The `vite` add-on (`@moc-global/eslint-config/vite`)
+      // a React-stack concern. The `vite` add-on (`eslint-config-mocg/vite`)
       // and the `next` stack each layer the appropriate `eslint-plugin-react-refresh`
       // preset on top. See add-nextjs-stack (framework-stack-compatibility).
       extends: [reactHooks.configs.flat['recommended-latest']],

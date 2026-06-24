@@ -1,6 +1,6 @@
 {
-  "name": "@moc-global/eslint-config",
-  "version": "2.1.0",
+  "name": "eslint-config-mocg",
+  "version": "2.2.0",
   "description": "Shared, company-wide ESLint flat config for Node.js, NestJS, React, Next.js, and Vue projects — with an interactive installer.",
   "keywords": [
     "eslint",
@@ -23,7 +23,7 @@
     "node": "^22.21.0 || >=24.10.0"
   },
   "bin": {
-    "moc-eslint": "./dist/cli/index.js"
+    "eslint-config-mocg": "./dist/cli/index.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

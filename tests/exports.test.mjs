@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 // surface. Mirrors the `exports` map in package.json (source paths here; the
 // built `dist` resolution is covered by the packaging test).
 const SUBPATHS = [
-  { path: '../src/index.js', named: ['moc', 'createNodeConfig', 'detectStacks', 'STACKS', 'EXTRAS'] },
+  { path: '../src/index.js', named: ['mocg', 'createNodeConfig', 'detectStacks', 'STACKS', 'EXTRAS'] },
   { path: '../src/config/node.eslint.js', named: ['createNodeConfig'], default: true },
   { path: '../src/config/react.eslint.js', named: ['createReactConfig'] },
   { path: '../src/config/next.eslint.js', named: ['createNextConfig'], default: true },

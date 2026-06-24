@@ -12,7 +12,7 @@ labels: [bug]
 ## Environment
 
 - Stack: <!-- node / nest / react / vue (+ any add-ons) -->
-- `@moc-global/eslint-config` version:
+- `eslint-config-mocg` version:
 - ESLint version:
 - Node version:
 

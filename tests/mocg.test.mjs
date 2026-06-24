@@ -2,7 +2,7 @@ import { fileURLToPath } from 'node:url';
 
 import { describe, expect, it } from 'vitest';
 
-import { moc } from '../src/index.js';
+import { mocg } from '../src/index.js';
 
 const bareDirectory = fileURLToPath(new URL('../fixtures/detect/bare', import.meta.url));
 
@@ -25,49 +25,49 @@ function pluginKeys(config) {
   return keys;
 }
 
-describe('moc()', () => {
+describe('mocg()', () => {
   it('returns a non-empty flat-config array for the node base', async () => {
-    const config = await moc({ rootDir: bareDirectory });
+    const config = await mocg({ rootDir: bareDirectory });
 
     expect(Array.isArray(config)).toBe(true);
     expect(config.length).toBeGreaterThan(0);
   });
 
   it('does not register React/Vue plugins for a bare project', async () => {
-    const keys = pluginKeys(await moc({ rootDir: bareDirectory }));
+    const keys = pluginKeys(await mocg({ rootDir: bareDirectory }));
 
     expect(keys.has('vue')).toBe(false);
     expect([...keys].some((key) => key.startsWith('react'))).toBe(false);
   });
 
   it('registers React plugins when react is forced on', async () => {
-    const keys = pluginKeys(await moc({ rootDir: bareDirectory, react: true }));
+    const keys = pluginKeys(await mocg({ rootDir: bareDirectory, react: true }));
 
     expect(keys.has('react')).toBe(true);
   });
 
   it('registers the Vue plugin when vue is forced on', async () => {
-    const keys = pluginKeys(await moc({ rootDir: bareDirectory, vue: true }));
+    const keys = pluginKeys(await mocg({ rootDir: bareDirectory, vue: true }));
 
     expect([...keys].some((key) => key === 'vue' || key.startsWith('vue'))).toBe(true);
   });
 
   it('lets an explicit false override auto-detection', async () => {
     const reactDirectory = fileURLToPath(new URL('../fixtures/detect/react', import.meta.url));
-    const keys = pluginKeys(await moc({ rootDir: reactDirectory, react: false }));
+    const keys = pluginKeys(await mocg({ rootDir: reactDirectory, react: false }));
 
     expect(keys.has('react')).toBe(false);
   });
 
   it('does not register Fast Refresh for a pristine React stack', async () => {
-    const keys = pluginKeys(await moc({ rootDir: bareDirectory, react: true }));
+    const keys = pluginKeys(await mocg({ rootDir: bareDirectory, react: true }));
 
     // Fast Refresh is a bundler concern; the pristine React stack does not load it.
     expect(keys.has('react-refresh')).toBe(false);
   });
 
   it('composes Next as React + Next, applying the React layer exactly once', async () => {
-    const config = await moc({ rootDir: bareDirectory, next: true });
+    const config = await mocg({ rootDir: bareDirectory, next: true });
     const keys = pluginKeys(config);
 
     expect(keys.has('@next/next')).toBe(true);
@@ -81,7 +81,7 @@ describe('moc()', () => {
 
   it('auto-detects Next and supersedes React (no double React layer)', async () => {
     const nextDirectory = fileURLToPath(new URL('../fixtures/detect/next', import.meta.url));
-    const config = await moc({ rootDir: nextDirectory });
+    const config = await mocg({ rootDir: nextDirectory });
 
     expect(pluginKeys(config).has('@next/next')).toBe(true);
     expect(config.filter((block) => block && block.name === 'react/rules')).toHaveLength(1);
@@ -89,7 +89,7 @@ describe('moc()', () => {
 
   it('falls back to React when next: false opts out of an auto-detected Next project', async () => {
     const nextDirectory = fileURLToPath(new URL('../fixtures/detect/next', import.meta.url));
-    const config = await moc({ rootDir: nextDirectory, next: false });
+    const config = await mocg({ rootDir: nextDirectory, next: false });
     const keys = pluginKeys(config);
 
     // Next is disabled, but a Next project is still a React project — React must
@@ -101,7 +101,7 @@ describe('moc()', () => {
 
   it('enables the Vite Fast Refresh add-on for a Vite project', async () => {
     const viteDirectory = fileURLToPath(new URL('../fixtures/detect/vite', import.meta.url));
-    const config = await moc({ rootDir: viteDirectory });
+    const config = await mocg({ rootDir: viteDirectory });
 
     expect(config.some((block) => block && block.name === 'vite/react-refresh')).toBe(true);
   });
@@ -111,7 +111,7 @@ describe('moc()', () => {
     // Force the vite add-on on a Next project: Next owns Fast Refresh, so the
     // vite block must be suppressed to avoid registering react-refresh twice
     // (which crashes ESLint) and clobbering Next's allowExportNames.
-    const config = await moc({ rootDir: nextDirectory, vite: true });
+    const config = await mocg({ rootDir: nextDirectory, vite: true });
 
     expect(config.some((block) => block && block.name === 'vite/react-refresh')).toBe(false);
     expect(config.filter((block) => block && block.name === 'next/react-refresh')).toHaveLength(1);

@@ -3,31 +3,30 @@
 ## Purpose
 Provide a first-class Next.js stack, composed as React plus the official
 `@next/eslint-plugin-next` rules, so a Next.js project lints cleanly out of the box
-via `moc()`: the plugin's Core Web Vitals rule set, Next-aware Fast Refresh export
+via `mocg()`: the plugin's Core Web Vitals rule set, Next-aware Fast Refresh export
 conventions for both the App and Pages Routers, relaxed documentation rules for
 Route Handlers and middleware, and ignored Next build artifacts. The stack is
 detected as superseding React (the React layer is applied exactly once, with React
 as the fallback when Next is disabled) and is exercised by the repository's own
 checks and a runnable example consumer.
-
 ## Requirements
 ### Requirement: Next.js stack is composed as React plus Next rules
 
-`moc()` SHALL provide a Next.js framework stack whose configuration is the React
+`mocg()` SHALL provide a Next.js framework stack whose configuration is the React
 configuration plus Next-specific rules. The Next stack SHALL reuse
 `createReactConfig()` so that React, JSX-runtime, and React-hooks linting apply to
 Next source, and SHALL layer the official `@next/eslint-plugin-next` rules on top.
 The exported `createNextConfig()` factory SHALL itself include the React layer, so
-importing `@moc-global/eslint-config/next` alone yields full React + Next coverage.
+importing `eslint-config-mocg/next` alone yields full React + Next coverage.
 
 #### Scenario: Next stack includes React linting
 
-- **WHEN** `moc({ next: true })` composes the configuration
+- **WHEN** `mocg({ next: true })` composes the configuration
 - **THEN** the React rules (JSX runtime, hooks) are present and the `@next/next` plugin is registered
 
 #### Scenario: createNextConfig is self-contained
 
-- **WHEN** a consumer imports `createNextConfig` from `@moc-global/eslint-config/next` and uses it without separately adding the React config
+- **WHEN** a consumer imports `createNextConfig` from `eslint-config-mocg/next` and uses it without separately adding the React config
 - **THEN** the resulting config lints `.tsx` React/Next source with both React and Next rules
 
 ### Requirement: Next rules come from the official plugin, not the meta-config
@@ -83,7 +82,7 @@ itself.)
 
 ### Requirement: Next supersedes React and is applied exactly once
 
-A project that depends on `next` SHALL resolve to the Next stack: `moc()` and the
+A project that depends on `next` SHALL resolve to the Next stack: `mocg()` and the
 installer SHALL prefer `next` over the standalone `react` stack, and the React
 layer SHALL be applied exactly once (composed inside the Next stack) — never twice
 and never zero times. Detection SHALL remain non-lossy (it MAY report both `react`
@@ -93,17 +92,17 @@ Next.js project is still a React project) rather than collapsing to a Node-only 
 
 #### Scenario: Next project resolves to the Next stack
 
-- **WHEN** `moc()` composes a project with `next`, `react`, and `react-dom` in its dependencies
+- **WHEN** `mocg()` composes a project with `next`, `react`, and `react-dom` in its dependencies
 - **THEN** the Next stack is applied (the `@next/next` plugin is registered) and no standalone React stack is layered on top of it
 
 #### Scenario: React layer is applied exactly once under Next
 
-- **WHEN** `moc()` composes a Next project
+- **WHEN** `mocg()` composes a Next project
 - **THEN** the React rule blocks appear exactly once in the resolved config (the Next stack does not stack a second React layer on top of an independent React stack)
 
 #### Scenario: Disabling Next falls back to React
 
-- **WHEN** `moc({ next: false })` is composed for a project that depends on `next`
+- **WHEN** `mocg({ next: false })` is composed for a project that depends on `next`
 - **THEN** the Next stack is not applied, and the React stack is applied instead (the React rule blocks are present), not a Node-only configuration
 
 #### Scenario: Fast Refresh is registered once when Vite is also present
@@ -113,7 +112,7 @@ Next.js project is still a React project) rather than collapsing to a Node-only 
 
 ### Requirement: The Next stack is exercised by the repository's own checks
 
-The repository's automated checks SHALL compose the Next stack via `moc()` and lint
+The repository's automated checks SHALL compose the Next stack via `mocg()` and lint
 real Next.js source (App Router and Pages Router) so that a Next stack which crashes
 ESLint at load or rule time, or emits spurious convention errors, fails the suite
 rather than shipping. A consumer-facing example SHALL install the packaged config
@@ -122,7 +121,7 @@ and lint clean under the examples verification harness.
 #### Scenario: Next stack is linted in CI
 
 - **WHEN** the test suite runs
-- **THEN** it composes the Next stack via `moc({ next: true })` and runs ESLint over Next `.tsx` source, failing if ESLint crashes
+- **THEN** it composes the Next stack via `mocg({ next: true })` and runs ESLint over Next `.tsx` source, failing if ESLint crashes
 
 #### Scenario: Next example lints clean against the packaged config
 

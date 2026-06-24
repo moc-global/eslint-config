@@ -17,7 +17,7 @@ import { EXTRAS, PACKAGE_NAME, type StackDefinition, STACKS } from './core/manif
 // are intentionally NOT re-exported here: a static re-export would force their
 // optional peer plugins to resolve at import time, breaking Node-only projects.
 // Import them from the subpath exports instead:
-//   import { createReactConfig } from '@moc-global/eslint-config/react';
+//   import { createReactConfig } from 'eslint-config-mocg/react';
 // ──────────────────────────────────────────────────────────────────────────
 export { createNodeConfig } from './config/node.eslint.js';
 
@@ -87,7 +87,7 @@ async function importEntry(definition: StackDefinition): Promise<Record<string, 
  * (force on), `false` (force off), or omitted (auto-detected from the project's
  * dependencies).
  */
-export interface MocOptions extends NodeConfigOptions {
+export interface MocgOptions extends NodeConfigOptions {
   node?: boolean;
   nest?: boolean;
   react?: boolean;
@@ -107,19 +107,19 @@ export interface MocOptions extends NodeConfigOptions {
  * requested framework stacks and add-ons, in the correct order.
  *
  * Returns a Promise — ESLint supports async flat config, so
- * `export default moc()` works directly.
+ * `export default mocg()` works directly.
  * @param options - Stack flags plus Node config options (rootDir, tsconfig, …).
  * @returns The resolved flat config array.
  * @example
  * // eslint.config.mjs — zero config, everything auto-detected
- * import { moc } from '@moc-global/eslint-config';
- * export default moc();
+ * import { mocg } from 'eslint-config-mocg';
+ * export default mocg();
  * @example
  * // Explicit stacks
- * import { moc } from '@moc-global/eslint-config';
- * export default moc({ react: true, vitest: true });
+ * import { mocg } from 'eslint-config-mocg';
+ * export default mocg({ react: true, vitest: true });
  */
-export async function moc(options: MocOptions = {}): Promise<Linter.Config[]> {
+export async function mocg(options: MocgOptions = {}): Promise<Linter.Config[]> {
   const rootDir = options.rootDir ?? process.cwd();
   const detected = detectStacks(rootDir);
 
@@ -179,7 +179,7 @@ export async function moc(options: MocOptions = {}): Promise<Linter.Config[]> {
 
   // `vueTs: true` implies the Vue stack: a consumer asking for type-aware SFC
   // linting clearly wants Vue, so enable it even if `vue` was not detected — but
-  // never override an explicit `vue: false`. Without this, `moc({ vueTs: true })`
+  // never override an explicit `vue: false`. Without this, `mocg({ vueTs: true })`
   // on a project where `vue` isn't detected silently produced no Vue config.
   if (enabled('vue', detected.stacks) || (options.vueTs === true && options.vue !== false)) {
     const entryModule = (await importEntry(STACKS.vue)) as unknown as {
@@ -215,4 +215,4 @@ export async function moc(options: MocOptions = {}): Promise<Linter.Config[]> {
   return configs;
 }
 
-export default moc;
+export default mocg;

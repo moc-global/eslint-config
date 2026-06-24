@@ -1,11 +1,11 @@
 # Next.js example
 
-A minimal Next.js + TypeScript project that consumes `@moc-global/eslint-config`
-via zero-config `moc()`. It exists to verify that the **Next stack** installs and
+A minimal Next.js + TypeScript project that consumes `eslint-config-mocg`
+via zero-config `mocg()`. It exists to verify that the **Next stack** installs and
 lints cleanly in a real consumer (peer resolution, version detection, the
 official `@next/eslint-plugin-next` rules, and Next-aware Fast Refresh).
 
-The Next stack is **React + Next**: `moc()` auto-detects `next` in the
+The Next stack is **React + Next**: `mocg()` auto-detects `next` in the
 dependencies and applies the React layer plus the official Next plugin's Core
 Web Vitals rules — it supersedes the standalone React stack, so the React layer
 is applied exactly once.
@@ -33,7 +33,7 @@ npm run typecheck
 
 ```js
 // eslint.config.mjs
-import { moc } from '@moc-global/eslint-config';
+import { mocg } from 'eslint-config-mocg';
 
-export default moc();
+export default mocg();
 ```

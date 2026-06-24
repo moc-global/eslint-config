@@ -5,7 +5,7 @@
 ```
                        your eslint.config.mjs
                                 │
-                        moc({ flags })          ← umbrella factory
+                        mocg({ flags })          ← umbrella factory
                                 │
         ┌───────────────────────┼───────────────────────┐
         │                       │                        │
@@ -18,17 +18,17 @@
                     a single flat-config array
 ```
 
-`moc()` is a thin orchestrator. It decides **which** layers to include, then composes them **in the right order**. All the actual rules live in small, focused modules under the package.
+`mocg()` is a thin orchestrator. It decides **which** layers to include, then composes them **in the right order**. All the actual rules live in small, focused modules under the package.
 
 ## Composition order matters
 
-ESLint flat config is last-write-wins: a later config block overrides an earlier one for any file it matches. `moc()` owns that order so you don't have to:
+ESLint flat config is last-write-wins: a later config block overrides an earlier one for any file it matches. `mocg()` owns that order so you don't have to:
 
 1. **Node base** (`createNodeConfig`) — JavaScript + TypeScript rules, with per-file overrides placed last internally.
 2. **Framework layer** — React, Next.js, Vue, or (as a base replacement) NestJS, layered on top of the Node base. **Next.js is React + Next rules**, so it supersedes the React stack: the React layer is composed inside the Next stack and applied exactly once, never twice.
 3. **Add-ons** — Vite Fast Refresh, Vitest/Jest test rules, Zod, i18n, Tailwind.
 
-Because the umbrella controls this, your config file stays a single `moc()` call and still gets correct precedence.
+Because the umbrella controls this, your config file stays a single `mocg()` call and still gets correct precedence.
 
 ## Bundled core vs. optional peers
 
@@ -48,26 +48,26 @@ zod + vitest plugins also bundled              better-tailwindcss
 
 ## Optional peers load lazily
 
-Each framework lives behind a subpath export (`@moc-global/eslint-config/react`, `/next`, `/vue`, `/nest`). `moc()` imports these **dynamically**, only when the corresponding flag is on. If a required peer is missing, you get an actionable error instead of a cryptic module-resolution failure:
+Each framework lives behind a subpath export (`eslint-config-mocg/react`, `/next`, `/vue`, `/nest`). `mocg()` imports these **dynamically**, only when the corresponding flag is on. If a required peer is missing, you get an actionable error instead of a cryptic module-resolution failure:
 
 ```
-[@moc-global/eslint-config] The "React" config requires packages that are not installed.
+[eslint-config-mocg] The "React" config requires packages that are not installed.
 
   Install them:   npm i -D eslint-plugin-react eslint-plugin-react-hooks …
-  Or run:         npx @moc-global/eslint-config init
+  Or run:         npx eslint-config-mocg init
 ```
 
-This is also why `moc()` returns a **Promise** — ESLint supports async flat config, so `export default moc()` works directly.
+This is also why `mocg()` returns a **Promise** — ESLint supports async flat config, so `export default mocg()` works directly.
 
 ## Auto-detection
 
-`moc()` reads your `package.json` (all dependency fields) and enables stacks/add-ons whose marker packages are present — `react` → React, `next` → Next.js, `@nestjs/core` → NestJS, `vite` → Vite Fast Refresh, `vitest` → Vitest rules, and so on. An explicit flag always wins:
+`mocg()` reads your `package.json` (all dependency fields) and enables stacks/add-ons whose marker packages are present — `react` → React, `next` → Next.js, `@nestjs/core` → NestJS, `vite` → Vite Fast Refresh, `vitest` → Vitest rules, and so on. An explicit flag always wins:
 
 ```js
-moc()                  // fully auto-detected
-moc({ react: true })   // force React on
-moc({ vue: false })    // force Vue off even if detected
-moc({ next: false })   // force Next off even if `next` is detected
+mocg()                  // fully auto-detected
+mocg({ react: true })   // force React on
+mocg({ vue: false })    // force Vue off even if detected
+mocg({ next: false })   // force Next off even if `next` is detected
 ```
 
 ::: tip Next supersedes React
@@ -79,7 +79,7 @@ A Next.js project depends on `next`, `react`, and `react-dom`, so both stacks wo
 The TypeScript layer uses `projectService`, so type-aware rules work without you wiring up `parserOptions.project`. The config auto-discovers your `tsconfig.json` (or a candidate like `tsconfig.base.json`), and you can point it explicitly:
 
 ```js
-moc({ tsconfig: 'tsconfig.app.json' });
+mocg({ tsconfig: 'tsconfig.app.json' });
 ```
 
 See the [API reference](/reference/api) for every option.

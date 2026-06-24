@@ -6,8 +6,8 @@ import reactRefresh from 'eslint-plugin-react-refresh';
  * `vite` preset (`react-refresh/only-export-components` with `allowConstantExport`),
  * scoped to React source. This is deliberately separate from the React stack:
  * Fast Refresh is a bundler/HMR concern, so the pristine React config does not
- * bake it in. `moc()` enables this automatically when the project depends on
- * `vite`; it is also importable directly via `@moc-global/eslint-config/vite`.
+ * bake it in. `mocg()` enables this automatically when the project depends on
+ * `vite`; it is also importable directly via `eslint-config-mocg/vite`.
  * @author Dmytro Vakulenko
  * @see https://github.com/ArnaudBarre/eslint-plugin-react-refresh
  */

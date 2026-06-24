@@ -4,13 +4,13 @@ import { fileURLToPath } from 'node:url';
 import { ESLint } from 'eslint';
 import { describe, expect, it } from 'vitest';
 
-import { moc } from '../src/index.js';
+import { mocg } from '../src/index.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const fixturesRoot = path.resolve(here, '../fixtures');
 
 // Dogfoods the NestJS and Vue stacks the way react-stack.test.mjs dogfoods React:
-// compose the stack via moc() and run ESLint over a real fixture. This catches
+// compose the stack via mocg() and run ESLint over a real fixture. This catches
 // load/rule-time crashes and spurious convention errors that the repo's Node-only
 // fixtures could never surface. `requiresBlock` is a config block the stack
 // contributes — asserting it is present proves the stack actually loaded (and
@@ -25,7 +25,7 @@ describe('Framework stacks are dogfooded', () => {
     const stackDirectory = path.join(fixturesRoot, stack.dir);
 
     it(`composes and lints the ${stack.name} stack without crashing`, async () => {
-      const config = await moc({ ...stack.options, rootDir: stackDirectory });
+      const config = await mocg({ ...stack.options, rootDir: stackDirectory });
 
       // The stack's own config block must be present — otherwise the stack
       // never loaded and the lint below would be a vacuous no-op.
@@ -42,7 +42,7 @@ describe('Framework stacks are dogfooded', () => {
 
   it('does not flag lowercase directories for a Vue SFC', async () => {
     const stackDirectory = path.join(fixturesRoot, 'vue-ts');
-    const config = await moc({ vueTs: true, rootDir: stackDirectory });
+    const config = await mocg({ vueTs: true, rootDir: stackDirectory });
 
     expect(config.some((entry) => entry.name === 'vue/overrides')).toBe(true);
 

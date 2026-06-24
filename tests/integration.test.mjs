@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { ESLint } from 'eslint';
 import { beforeAll, describe, expect, it } from 'vitest';
 
-import { moc } from '../src/index.js';
+import { mocg } from '../src/index.js';
 
 const fixtureDirectory = fileURLToPath(new URL('../fixtures/node-ts', import.meta.url));
 
@@ -13,7 +13,7 @@ const fixtureDirectory = fileURLToPath(new URL('../fixtures/node-ts', import.met
  * @returns {Promise<import('eslint').ESLint.LintResult[]>} Lint results.
  */
 async function lintFixture(file) {
-  const overrideConfig = await moc({ rootDir: fixtureDirectory, tsconfig: 'tsconfig.json' });
+  const overrideConfig = await mocg({ rootDir: fixtureDirectory, tsconfig: 'tsconfig.json' });
   const eslint = new ESLint({ cwd: fixtureDirectory, overrideConfigFile: true, overrideConfig });
 
   return eslint.lintFiles([file]);

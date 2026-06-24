@@ -1,7 +1,7 @@
 # typescript-app-example
 
 A small Node.js + TypeScript service that consumes
-[`@moc-global/eslint-config`](../../README.md) to demonstrate a real-world setup:
+[`eslint-config-mocg`](../../README.md) to demonstrate a real-world setup:
 path aliases, layered architecture (domain / repositories / services), and
 type-aware linting.
 
@@ -28,7 +28,7 @@ npm run typecheck
 The ESLint setup is the whole point — see `eslint.config.mjs`:
 
 ```js
-import { moc } from '@moc-global/eslint-config';
+import { mocg } from 'eslint-config-mocg';
 
-export default moc(); // auto-detects the stack and reads tsconfig path aliases
+export default mocg(); // auto-detects the stack and reads tsconfig path aliases
 ```

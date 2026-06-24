@@ -11,7 +11,7 @@ The package SHALL publish the compiled `dist/` directory (JavaScript plus declar
 - **THEN** the tarball contains `package.json` and `dist/` (with `.js` and `.d.ts`), and excludes `src`, `tests`, `fixtures`, and `docs`
 
 #### Scenario: Subpath exports resolve to built files
-- **WHEN** a consumer imports `@moc-global/eslint-config/react`
+- **WHEN** a consumer imports `eslint-config-mocg/react`
 - **THEN** it resolves to the compiled `dist/config/react.eslint.js` with its declaration
 
 ### Requirement: Registry-agnostic publishing

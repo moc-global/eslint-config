@@ -48,7 +48,7 @@ describe('detectStacks', () => {
     const result = detectStacks(fixture('next'));
 
     expect(result.stacks).toContain('next');
-    // Detection is intentionally NOT lossy: both are reported. `moc()` applies
+    // Detection is intentionally NOT lossy: both are reported. `mocg()` applies
     // the React layer exactly once via the Next stack, and falls back to React
     // when `next` is disabled — so React must remain detectable here.
     expect(result.stacks).toContain('react');

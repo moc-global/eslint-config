@@ -15,7 +15,7 @@ describe('STACKS manifest', () => {
 
   it('derives the package name from package.json', () => {
     expect(PACKAGE_NAME).toBe(package_.name);
-    expect(PACKAGE_NAME).toBe('@moc-global/eslint-config');
+    expect(PACKAGE_NAME).toBe('eslint-config-mocg');
   });
 
   it('sources every plugin version range from package.json peerDependencies (single source of truth)', () => {
@@ -66,7 +66,7 @@ describe('requiredPlugins', () => {
     expect(requiredPlugins(['vite'])).toHaveProperty('eslint-plugin-react-refresh');
   });
 
-  it('does NOT require eslint-plugin-react-compiler (it is opt-in, never loaded by moc())', () => {
+  it('does NOT require eslint-plugin-react-compiler (it is opt-in, never loaded by mocg())', () => {
     // Auto-installing react-compiler pinned zod-validation-error@3.5.4 (no ./v4
     // export) and crashed ESLint for React consumers. It is an optional peer,
     // available via the `/react-compiler` opt-in export only.

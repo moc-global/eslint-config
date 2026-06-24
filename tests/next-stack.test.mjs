@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { ESLint } from 'eslint';
 import { describe, expect, it } from 'vitest';
 
-import { moc } from '../src/index.js';
+import { mocg } from '../src/index.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const fixtureDirectory = path.resolve(here, '../fixtures/next-ts');
@@ -15,20 +15,20 @@ const fixtureDirectory = path.resolve(here, '../fixtures/next-ts');
  * @returns {Promise<import('eslint').Linter.LintMessage[]>} ESLint messages.
  */
 async function lintNextFile(relativeFile) {
-  const config = await moc({ next: true, rootDir: fixtureDirectory });
+  const config = await mocg({ next: true, rootDir: fixtureDirectory });
   const eslint = new ESLint({ cwd: fixtureDirectory, overrideConfigFile: true, baseConfig: config });
   const [result] = await eslint.lintFiles([path.join(fixtureDirectory, relativeFile)]);
 
   return result;
 }
 
-// Dogfoods the Next stack end-to-end: composes moc({ next: true }) and runs
+// Dogfoods the Next stack end-to-end: composes mocg({ next: true }) and runs
 // ESLint over real App Router and Pages Router source. Catches load/rule-time
 // crashes and verifies the Next-specific relaxations (Fast Refresh export names,
 // route-handler JSDoc) actually take effect.
 describe('Next stack (dogfood)', () => {
   it('composes the Next config (React + Next) with the Next block present', async () => {
-    const config = await moc({ next: true, rootDir: fixtureDirectory });
+    const config = await mocg({ next: true, rootDir: fixtureDirectory });
 
     expect(Array.isArray(config)).toBe(true);
     // The Next stack's own block must be present — otherwise the stack never

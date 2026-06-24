@@ -7,7 +7,7 @@ import type { Metadata, Viewport } from 'next';
 // flag them.
 export const metadata: Metadata = {
   title: 'MOC Next Example',
-  description: 'Example Next.js app linted by @moc-global/eslint-config',
+  description: 'Example Next.js app linted by eslint-config-mocg',
 };
 
 export const viewport: Viewport = {

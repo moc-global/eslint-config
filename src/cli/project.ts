@@ -108,9 +108,9 @@ export function generateConfigFile(selection: GenerateConfigFileSelection): stri
     flags.push(`  ${extra}: true,`);
   }
 
-  const body = flags.length > 0 ? `moc({\n${flags.join('\n')}\n})` : 'moc()';
+  const body = flags.length > 0 ? `mocg({\n${flags.join('\n')}\n})` : 'mocg()';
 
-  return `import { moc } from '${PACKAGE_NAME}';\n\nexport default ${body};\n`;
+  return `import { mocg } from '${PACKAGE_NAME}';\n\nexport default ${body};\n`;
 }
 
 /**

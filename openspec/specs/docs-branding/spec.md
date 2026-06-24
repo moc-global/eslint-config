@@ -5,7 +5,6 @@ Give the README and the VitePress documentation site the MOC visual identity: th
 logo (README banner, site nav, and home hero) and the MOC brand-red accent color in place
 of the default theme accent — with accent values that satisfy WCAG AA contrast in both the
 light and dark themes.
-
 ## Requirements
 ### Requirement: The README displays the MOC logo
 
@@ -17,7 +16,7 @@ variants), because the mark reads correctly on both GitHub light and dark backgr
 #### Scenario: Logo banner renders above the title
 
 - **WHEN** `README.md` is viewed on GitHub
-- **THEN** the MOC logo appears centered above the `# @moc-global/eslint-config` heading, with descriptive `alt` text
+- **THEN** the MOC logo appears centered above the `# eslint-config-mocg` heading, with descriptive `alt` text
 
 ### Requirement: The documentation site displays the MOC logo
 
@@ -85,3 +84,4 @@ break the documentation build; `npm run docs:build` SHALL continue to succeed.
 
 - **WHEN** `npm run docs:build` is run after the branding changes
 - **THEN** the build completes successfully
+

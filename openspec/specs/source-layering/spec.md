@@ -4,7 +4,7 @@
 TBD - created by archiving change port-to-typescript-and-restructure. Update Purpose after archive.
 ## Requirements
 ### Requirement: Layered source structure
-The source tree SHALL separate the ESLint rule product from the supporting machinery: rule modules and stack/extra barrels live under `src/config/`, shared machinery (detection, logger, tsconfig utilities, the stack manifest) lives under `src/core/`, the installer lives under `src/cli/`, and the public `moc()` orchestrator remains the `src/index` entry.
+The source tree SHALL separate the ESLint rule product from the supporting machinery: rule modules and stack/extra barrels live under `src/config/`, shared machinery (detection, logger, tsconfig utilities, the stack manifest) lives under `src/core/`, the installer lives under `src/cli/`, and the public `mocg()` orchestrator remains the `src/index` entry.
 
 #### Scenario: Rule modules are isolated under config
 - **WHEN** the source tree is inspected
@@ -32,7 +32,7 @@ The repository SHALL lint its own TypeScript source with its own published confi
 - **WHEN** `npm run lint` runs on a clean checkout (no `dist/`)
 - **THEN** ESLint loads the TypeScript config via its loader and lints `src/` and `tests/` with the type-aware ruleset, exiting 0
 
-#### Scenario: Public API surface is unchanged
+#### Scenario: Public API surface resolves after the rename
 - **WHEN** the package is consumed after restructuring
-- **THEN** `moc()` and every subpath export (`./node`, `./react`, `./vue`, `./nest`, `./vitest`, `./jest`, `./zod`, `./i18n`, `./tailwind`, `./stacks`) resolve under their existing names
+- **THEN** the renamed umbrella export `mocg()` resolves, and every subpath export (`./node`, `./react`, `./vue`, `./nest`, `./vitest`, `./jest`, `./zod`, `./i18n`, `./tailwind`, `./stacks`) — whose names are unchanged — resolves correctly
 
