@@ -1,0 +1,80 @@
+name: Release
+
+# Builds and publishes eslint-config-mocg to npm when a GitHub Release is
+# published. Run manually via "Run workflow" for recovery.
+on:
+  release:
+    types: [published]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  id-token: write # OIDC-ready: lets npm trusted publishing be adopted later
+
+# Husky's git hooks are irrelevant in CI; skip them so `npm ci`'s `prepare`
+# step just builds dist/ (matches ci.yml and docs.yml).
+env:
+  HUSKY: '0'
+
+jobs:
+  publish:
+    name: Build + Publish to npm
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24 # satisfies engines and the npm OIDC minimum
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install
+        run: npm ci
+
+      - name: Verify release tag matches package.json version
+        # Only a published Release carries a tag that can drift from package.json,
+        # so the strict gate is release-only. A manual workflow_dispatch run
+        # publishes the checked-out package.json version as-is (recovery path) and
+        # must not key off the dispatched branch name. The tag is read via env (not
+        # interpolated into the script) so a crafted tag cannot inject shell.
+        if: github.event_name == 'release'
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          PKG_VERSION="$(node -p "require('./package.json').version")"
+          TAG_STRIPPED="${RELEASE_TAG#v}"
+
+          echo "package.json version:   ${PKG_VERSION}"
+          echo "release tag:            ${RELEASE_TAG}"
+          echo "release tag (stripped): ${TAG_STRIPPED}"
+
+          if [ "${PKG_VERSION}" != "${TAG_STRIPPED}" ]; then
+            echo "::error::Version mismatch. package.json=${PKG_VERSION} but tag=${TAG_STRIPPED}"
+            exit 1
+          fi
+
+      - name: Publish (prepublishOnly builds dist/)
+        # Prereleases publish under the `next` dist-tag so they never displace the
+        # default `latest` that consumers install; stable releases and manual
+        # dispatch runs use `latest`.
+        shell: bash
+        env:
+          # NPM_TOKEN must be a GitHub Actions Secret (not a Variable) with publish
+          # rights. Required for the first/early publishes; OIDC can take over once
+          # trusted publishing is configured on npmjs.com.
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          IS_PRERELEASE: ${{ github.event.release.prerelease }}
+        run: |
+          DIST_TAG="latest"
+          if [ "${IS_PRERELEASE}" = "true" ]; then
+            DIST_TAG="next"
+          fi
+          echo "Publishing $(node -p "require('./package.json').version") under dist-tag: ${DIST_TAG}"
+          npm publish --access public --tag "${DIST_TAG}"
