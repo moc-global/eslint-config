@@ -223,10 +223,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/dmytro-vakulenko-moc/eslint-config.git"
+    "url": "git+https://github.com/moc-global/eslint-config.git"
   },
-  "homepage": "https://github.com/dmytro-vakulenko-moc/eslint-config#readme",
+  "homepage": "https://moc-global.github.io/eslint-config/",
   "bugs": {
-    "url": "https://github.com/dmytro-vakulenko-moc/eslint-config/issues"
+    "url": "https://github.com/moc-global/eslint-config/issues"
   }
 }

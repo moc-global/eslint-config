@@ -69,7 +69,7 @@ export default defineConfig({
       },
     ],
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/dmytro-vakulenko-moc/eslint-config' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/moc-global/eslint-config' }],
 
     footer: {
       message: 'Internal tooling — Master of Code Global',

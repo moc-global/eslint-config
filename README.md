@@ -64,7 +64,7 @@ authored in TypeScript and **builds itself on install** via the `prepare` script
 
 ```jsonc
 // git dependency — `prepare` compiles dist/ on install
-"eslint-config-mocg": "git+ssh://git@github.com/dmytro-vakulenko-moc/eslint-config.git#semver:^2"
+"eslint-config-mocg": "git+ssh://git@github.com/moc-global/eslint-config.git#semver:^2"
 ```
 
 ```bash
@@ -87,7 +87,7 @@ See [Existing & legacy projects](./docs/guide/existing-projects.md).
 
 ## Documentation
 
-📖 **Published:** [dmytro-vakulenko-moc.github.io/eslint-config](https://dmytro-vakulenko-moc.github.io/eslint-config/)
+📖 **Published:** [moc-global.github.io/eslint-config](https://moc-global.github.io/eslint-config/)
 — deployed from `main` by [`.github/workflows/docs.yml`](./.github/workflows/docs.yml)
 (live once GitHub Pages is enabled with Source: "GitHub Actions").
 

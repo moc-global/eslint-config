@@ -4,12 +4,26 @@ All notable changes to `eslint-config-mocg` are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 this project adheres to [Semantic Versioning](https://semver.org/). See the
-[versioning policy](https://github.com/dmytro-vakulenko-moc/eslint-config/blob/main/docs/guide/versioning.md)
+[versioning policy](https://github.com/moc-global/eslint-config/blob/main/docs/guide/versioning.md)
 for what counts as a major, minor, or patch.
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+
+- CI release workflow (`.github/workflows/release.yml`): publishes to npm on a
+  published GitHub Release (with `workflow_dispatch` for manual recovery), guarded
+  by a tag↔`package.json` version check. Prereleases publish under the `next`
+  dist-tag so they never displace `latest`.
+
+### Changed
+
+- Repository metadata now points at the canonical `moc-global/eslint-config`
+  (previously `dmytro-vakulenko-moc/eslint-config`): `package.json`
+  `repository`/`homepage`/`bugs`, plus the README, docs, changelog footer, and
+  issue-template links. `repository.url` is now the public `git+https` form and
+  `homepage` points at the documentation site. The package name remains
+  `eslint-config-mocg`.
 
 ## [2.2.0]
 
@@ -110,7 +124,7 @@ distribution model, layout, and minimum tooling versions all changed.
   the false-positive-prone `detect-object-injection`; and relaxes
   `max-classes-per-file`.
 
-[Unreleased]: https://github.com/dmytro-vakulenko-moc/eslint-config/compare/v2.2.0...HEAD
-[2.2.0]: https://github.com/dmytro-vakulenko-moc/eslint-config/compare/v2.1.0...v2.2.0
-[2.1.0]: https://github.com/dmytro-vakulenko-moc/eslint-config/compare/v2.0.0...v2.1.0
-[2.0.0]: https://github.com/dmytro-vakulenko-moc/eslint-config/releases/tag/v2.0.0
+[Unreleased]: https://github.com/moc-global/eslint-config/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/moc-global/eslint-config/compare/v2.1.0...v2.2.0
+[2.1.0]: https://github.com/moc-global/eslint-config/compare/v2.0.0...v2.1.0
+[2.0.0]: https://github.com/moc-global/eslint-config/releases/tag/v2.0.0
